@@ -1,54 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Award, BadgeCheck, ExternalLink, X, FileText, Star } from 'lucide-react';
+import { Award, BadgeCheck, ExternalLink, X, FileText, Star, Loader } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 
-// --- DATA DUMMY ---
-const CERTIFICATES_DATA = [
-  { 
-    id: 1, 
-    title: "Google UX Design Professional Certificate", 
-    issuer: "Coursera", 
-    date: "Mar 2024", 
-    credentialId: "ID: 123456",
-    verifyLink: "https://coursera.org",
-    imageUrl: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000",
-    description: "Completed a rigorous 7-course professional certificate. Gained expertise in the design process: empathizing with users, defining pain points, ideating solutions."
-  },
-  { 
-    id: 2, 
-    title: "React (Basic) Certificate", 
-    issuer: "HackerRank", 
-    date: "Jan 2024", 
-    credentialId: "ID: ABC-DEF",
-    verifyLink: "https://hackerrank.com",
-    imageUrl: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=1000",
-    description: "Validated fundamental knowledge of React including components, props, state management, and lifecycle methods through a timed assessment."
-  },
-  { 
-    id: 3, 
-    title: "AWS Cloud Practitioner Essentials", 
-    issuer: "Amazon Web Services", 
-    date: "Dec 2023", 
-    credentialId: "ID: AWS-789",
-    verifyLink: "https://aws.amazon.com",
-    imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000",
-    description: "Fundamental understanding of IT services and their uses in the AWS Cloud. Knowledge of cloud concepts, security, compliance, technology, and billing."
-  },
-  { 
-    id: 4, 
-    title: "JavaScript Algorithms and Data Structures", 
-    issuer: "FreeCodeCamp", 
-    date: "Nov 2023", 
-    credentialId: "ID: FCC-JS",
-    verifyLink: "https://freecodecamp.org",
-    imageUrl: "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?q=80&w=1000",
-    description: "Mastered fundamental programming concepts in JavaScript. Completed complex algorithm challenges and built five certification projects."
-  }
-];
-
 const Certificates = () => {
+  const [certificates, setCertificates] = useState([]);
   const [selectedCert, setSelectedCert] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/certificates");
+        setCertificates(res.data);
+      } catch (error) {
+        console.error("error fetching certificates:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <PageTransition>
@@ -59,11 +32,9 @@ const Certificates = () => {
             
             {/* cover image */}
             <div className="shrink-0 shadow-[0_8px_40px_rgba(0,0,0,0.6)] md:shadow-2xl mx-auto md:mx-0">
-              <img
-                src="https://images.unsplash.com/photo-1635352723068-ffb3b922397f?q=80&w=500" 
-                alt="Certificates Cover"
-                className="w-[200px] h-[200px] md:w-60 md:h-60 object-cover shadow-2xl rounded-md md:rounded-none"
-              />
+              <div className="w-[200px] h-[200px] md:w-60 md:h-60 bg-[#2a2a2a] flex items-center justify-center shadow-2xl rounded-md md:rounded-none">
+                 <Award size={80} className="text-yellow-400"/>
+              </div>
             </div>
 
             {/* metadata text */}
@@ -84,45 +55,53 @@ const Certificates = () => {
                 <Star size={16} className="text-yellow-400 fill-white" />
                 <span>Certified</span>
                 <span className="mx-1">•</span>
-                <span>{CERTIFICATES_DATA.length} credentials</span>
+                <span>{certificates.length} credentials</span>
               </div>
             </div>
          </section>
 
          {/* grid certificates */}
-         <div className="px-4 md:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 pb-24">
-            {CERTIFICATES_DATA.map((cert, idx) => (
-               <motion.div 
-                 key={cert.id} 
-                 initial={{ opacity: 0, scale: 0.9 }}
-                 animate={{ opacity: 1, scale: 1 }}
-                 transition={{ delay: idx * 0.1 }}
-                 whileHover={{ scale: 1.02 }}
-                 onClick={() => setSelectedCert(cert)}
-                 className="group bg-[#181818] hover:bg-[#282828] p-5 rounded-lg transition cursor-pointer relative overflow-hidden border border-transparent hover:border-[#333] flex flex-col h-full"
-               >
-                  <div className="flex items-start justify-between mb-4">
-                     <div className="w-12 h-12 bg-yellow-900/30 rounded-lg flex items-center justify-center text-yellow-500 font-bold border border-yellow-700/50">
-                        <Award size={24}/>
-                     </div>
-                     <ExternalLink size={18} className="text-gray-500 group-hover:text-white transition opacity-0 group-hover:opacity-100"/>
-                  </div>
-                  
-                  <h3 className="font-bold text-white text-lg line-clamp-2 mb-1 group-hover:text-yellow-500 transition">{cert.title}</h3>
-                  
-                  <div className="flex items-center gap-2 mb-3">
-                     <BadgeCheck size={14} className="text-blue-400 shrink-0"/>
-                     <p className="text-sm text-gray-300 font-medium truncate">{cert.issuer}</p>
-                  </div>
-                  
-                  <div className="border-t border-[#333] pt-3 mt-auto">
-                     <p className="text-xs text-gray-500 font-mono flex justify-between">
-                         <span>{cert.date}</span>
-                         <span>Valid</span>
-                     </p>
-                  </div>
-               </motion.div>
-            ))}
+         <div className="px-4 md:px-8 pb-24 mt-4">
+            {loading ? (
+               <div className="flex justify-center py-10">
+                  <Loader className="animate-spin text-yellow-400" size={32}/>
+               </div>
+            ) : (
+               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {certificates.map((cert, idx) => (
+                     <motion.div 
+                       key={cert._id || cert.id} 
+                       initial={{ opacity: 0, scale: 0.9 }}
+                       animate={{ opacity: 1, scale: 1 }}
+                       transition={{ delay: idx * 0.1 }}
+                       whileHover={{ scale: 1.02 }}
+                       onClick={() => setSelectedCert(cert)}
+                       className="group bg-[#181818] hover:bg-[#282828] p-5 rounded-lg transition cursor-pointer relative overflow-hidden border border-transparent hover:border-[#333] flex flex-col h-full"
+                     >
+                        <div className="flex items-start justify-between mb-4">
+                           <div className="w-12 h-12 bg-yellow-900/30 rounded-lg flex items-center justify-center text-yellow-500 font-bold border border-yellow-700/50">
+                              <Award size={24}/>
+                           </div>
+                           <ExternalLink size={18} className="text-gray-500 group-hover:text-white transition opacity-0 group-hover:opacity-100"/>
+                        </div>
+                        
+                        <h3 className="font-bold text-white text-lg line-clamp-2 mb-1 group-hover:text-yellow-500 transition">{cert.title}</h3>
+                        
+                        <div className="flex items-center gap-2 mb-3">
+                           <BadgeCheck size={14} className="text-blue-400 shrink-0"/>
+                           <p className="text-sm text-gray-300 font-medium truncate">{cert.issuer}</p>
+                        </div>
+                        
+                        <div className="border-t border-[#333] pt-3 mt-auto">
+                           <p className="text-xs text-gray-500 font-mono flex justify-between">
+                               <span>{cert.date}</span>
+                               <span>Valid</span>
+                           </p>
+                        </div>
+                     </motion.div>
+                  ))}
+               </div>
+            )}
          </div>
 
          {/* popup modal */}
@@ -145,7 +124,6 @@ const Certificates = () => {
                      exit={{ scale: 0.95, opacity: 0, y: 20 }}
                      className="bg-[#181818] w-[90%] md:w-full max-w-4xl max-h-[85vh] md:max-h-[600px] rounded-xl border border-[#333] shadow-2xl overflow-hidden relative z-10 flex flex-col md:flex-row"
                   >
-                     {/* close button */}
                      <button 
                         onClick={() => setSelectedCert(null)}
                         className="absolute top-3 right-3 bg-black/60 hover:bg-black p-1.5 rounded-full text-white z-50 transition border border-white/10"
