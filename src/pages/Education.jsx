@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { GraduationCap } from 'lucide-react';
+import { GraduationCap, Award } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 
 // DATA DUMMY
@@ -26,20 +26,45 @@ const EDUCATION_DATA = [
 const Education = () => {
   return (
     <PageTransition>
-      <div className="h-full overflow-y-auto bg-[#121212] pb-32 custom-scrollbar">
+      <div className="h-full overflow-y-auto bg-[#121212] pb-32 md:pb-0 custom-scrollbar">
 
         {/* header */}
-        <div className="px-4 sm:px-6 pt-16 sm:pt-20 md:pt-10 pb-6 bg-gradient-to-b from-[#8cb4e6] via-[#3b65bd] to-[#121212] transition-all">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-2 drop-shadow-lg">
-            Education
-          </h1>
-          <p className="text-gray-300/90 text-sm sm:text-base">
-            Academic background & certifications
-          </p>
-        </div>
+        <section className="relative pt-20 md:pt-24 pb-6 px-4 md:px-8 bg-gradient-to-b from-[#3b65bd] via-[#243e73] to-[#121212] flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-8 transition-all">
+            
+            {/* cover image */}
+            <div className="shrink-0 shadow-[0_8px_40px_rgba(0,0,0,0.6)] md:shadow-2xl mx-auto md:mx-0">
+              <img
+                src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=500" 
+                alt="Education Cover"
+                className="w-[200px] h-[200px] md:w-60 md:h-60 object-cover shadow-2xl rounded-md md:rounded-none"
+              />
+            </div>
+
+            {/* metadata text */}
+            <div className="flex flex-col gap-1 text-left w-full">
+              <span className="uppercase text-[10px] md:text-xs font-bold tracking-widest text-white hidden md:block">
+                Academic Background
+              </span>
+
+              <h1 className="text-3xl md:text-5xl lg:text-7xl font-black tracking-tighter text-white drop-shadow-lg mb-1 md:mb-2">
+                Education
+              </h1>
+
+              <p className="text-gray-300/90 text-xs md:text-sm font-medium max-w-xl">
+                Degrees, certifications, and academic achievements.
+              </p>
+
+              <div className="flex items-center gap-1 text-xs md:text-sm text-gray-300 mt-2 font-medium">
+                <Award size={16} className="text-blue-400" />
+                <span>Scholar</span>
+                <span className="mx-1">•</span>
+                <span>{EDUCATION_DATA.length} milestones</span>
+              </div>
+            </div>
+         </section>
 
         {/* content */}
-        <div className="px-4 sm:px-6 grid grid-cols-1 gap-4">
+        <div className="px-4 md:px-8 grid grid-cols-1 gap-4 mt-4 pb-24">
           {EDUCATION_DATA.map((edu, idx) => (
             <motion.div
               key={edu.id}
@@ -78,10 +103,10 @@ const Education = () => {
                   </div>
 
                   <div>
-                    <h3 className="text-white text-base sm:text-lg font-bold leading-snug">
+                    <h3 className="text-white text-base sm:text-lg font-bold leading-snug group-hover:text-blue-400 transition">
                       {edu.school}
                     </h3>
-                    <p className="text-blue-400 text-sm font-medium">
+                    <p className="text-gray-400 text-sm font-medium">
                       {edu.degree}
                     </p>
                   </div>
