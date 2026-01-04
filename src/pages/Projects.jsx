@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import axios from "axios";
+import { LayoutGrid } from "lucide-react"; 
 import ProjectCard from "../components/ProjectCard";
 import PageTransition from "../components/PageTransition";
 
@@ -16,10 +17,11 @@ const Projects = () => {
   const searchQuery =
     new URLSearchParams(location.search).get("q") || "";
 
-  useEffect(() => {
+  useEffect(() => { 
     axios
       .get("http://localhost:5000/api/projects")
-      .then((res) => setProjects(res.data));
+      .then((res) => setProjects(res.data))
+      .catch(() => {}); // handle error silent for now
   }, []);
 
   const handleProjectClick = (project) => {
@@ -39,39 +41,59 @@ const Projects = () => {
     return matchCategory && matchSearch;
   });
 
+  // dummy projects if api fails (for visualization)
+  const displayProjects = projects.length > 0 ? filteredProjects : []; 
+
+  // get first 6 projects for hero section
   const featuredProjects = projects.slice(0, 6);
 
   return (
     <PageTransition>
-      <div className="h-full overflow-y-auto custom-scrollbar bg-gradient-to-b from-[#1e1e1e] to-[#121212] pb-32 md:pb-0">
+      <div className="h-full overflow-y-auto custom-scrollbar bg-[#121212] pb-32 md:pb-0">
 
         {/* header */}
-        <div className="px-4 md:px-6 pt-20 md:pt-6 pb-4 bg-gradient-to-b from-[#a17ec1] via-[#61368a] to-[#121212] transition-all">
-          <h1 className="text-3xl md:text-6xl font-black text-white drop-shadow-lg">
-            Your Projects
-          </h1>
+        <section className="relative pt-20 md:pt-24 pb-6 px-4 md:px-8 bg-gradient-to-b from-[#61368a] via-[#3f205e] to-[#121212] flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-8 transition-all">
+          
+          {/* cover image */}
+          <div className="shrink-0 shadow-[0_8px_40px_rgba(0,0,0,0.6)] md:shadow-2xl mx-auto md:mx-0">
+            <div className="w-[200px] h-[200px] md:w-60 md:h-60 bg-[#2a2a2a] flex items-center justify-center shadow-2xl rounded-md md:rounded-none">
+               <LayoutGrid size={80} className="text-purple-400" />
+            </div>
+          </div>
 
-          {searchQuery ? (
-            <p className="text-gray-300/90 mt-2 text-sm">
-              Search result for{" "}
-              <span className="text-pink-400 font-semibold">
-                "{searchQuery}"
-              </span>
+          {/* metadata text */}
+          <div className="flex flex-col gap-1 text-left w-full">
+            <span className="uppercase text-[10px] md:text-xs font-bold tracking-widest text-white hidden md:block">
+              Public Playlist
+            </span>
+
+            <h1 className="text-3xl md:text-5xl lg:text-7xl font-black tracking-tighter text-white drop-shadow-lg mb-1 md:mb-2">
+              Your Projects
+            </h1>
+
+            <p className="text-gray-300/90 text-xs md:text-sm font-medium max-w-xl line-clamp-2 md:line-clamp-none">
+               {searchQuery ? `Search result for "${searchQuery}"` : "A collection of applications and interfaces I have built."}
             </p>
-          ) : (
-            <p className="text-gray-400 mt-2 text-sm">
-              A collection of applications and interfaces I have built
-            </p>
-          )}
-        </div>
+
+            <div className="flex items-center gap-1 text-xs md:text-sm text-gray-300 mt-2 font-medium">
+              <span className="font-bold text-white">Fatiya Labibah</span>
+              <span className="mx-1">•</span>
+              <span>{projects.length} songs (projects), approx 2 hr 15 min</span>
+            </div>
+          </div>
+        </section>
 
         {/* filter */}
-        <div className="px-4 md:px-6 mt-4 flex gap-2 mb-6 overflow-x-auto no-scrollbar">
+        <div className="px-4 md:px-8 mt-6 flex gap-2 mb-6 overflow-x-auto no-scrollbar">
           {FILTERS.map((cat) => (
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-4 py-1.5 rounded-full text-sm font-bold transition
+              className={`
+                px-3 py-1.5 md:px-4 md:py-1.5 
+                rounded-full 
+                text-xs md:text-sm 
+                font-bold transition border border-transparent whitespace-nowrap
                 ${
                   filter === cat
                     ? "bg-white text-black"
@@ -84,20 +106,20 @@ const Projects = () => {
         </div>
 
         {/* hero */}
-        <section className="px-4 md:px-6 mb-8">
+        <section className="px-4 md:px-8 mb-8">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {featuredProjects.map((item) => (
               <div
-                key={item._id}
+                key={item._id || item.id}
                 onClick={() => handleProjectClick(item)}
-                className="flex items-center gap-3 bg-[#2a2a2a]/90 hover:bg-[#3E3E3E] rounded pr-2 cursor-pointer h-14 md:h-16 transition"
+                className="flex items-center gap-3 bg-[#2a2a2a]/90 hover:bg-[#3E3E3E] rounded pr-2 cursor-pointer h-14 md:h-16 transition overflow-hidden"
               >
                 <img
-                  src={item.imageUrl}
+                  src={item.imageUrl || "https://via.placeholder.com/150"}
                   alt={item.title}
                   className="h-full aspect-square object-cover"
                 />
-                <span className="font-bold text-xs md:text-sm text-white line-clamp-2">
+                <span className="font-bold text-xs md:text-sm text-white line-clamp-2 pr-2">
                   {item.title}
                 </span>
               </div>
@@ -106,19 +128,19 @@ const Projects = () => {
         </section>
 
         {/* all projects */}
-        <section className="px-4 md:px-6 pb-24">
+        <section className="px-4 md:px-8 pb-24">
           <h2 className="text-lg md:text-2xl font-bold mb-4 text-white">
             All Projects
           </h2>
 
-          {filteredProjects.length === 0 ? (
-            <p className="text-gray-500 text-sm">
-              No projects found.
-            </p>
+          {filteredProjects.length === 0 && projects.length === 0 ? (
+             <div className="text-gray-500 text-sm mt-10">
+                No projects found. (Ensure backend is running or mock data is connected)
+             </div>
           ) : (
-            <div className="flex md:grid gap-4 overflow-x-auto md:overflow-visible no-scrollbar md:grid-cols-[repeat(auto-fill,minmax(180px,1fr))]">
-              {filteredProjects.map((item) => (
-                <div key={item._id} className="min-w-[150px] md:min-w-0">
+            <div className="grid grid-cols-2 gap-3 md:flex md:flex-wrap md:gap-5">
+              {(filteredProjects.length > 0 ? filteredProjects : projects).map((item) => (
+                <div key={item._id || item.id} className="w-full md:w-[200px] shrink-0">
                   <ProjectCard
                     project={item}
                     onClick={handleProjectClick}
