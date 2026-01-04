@@ -27,7 +27,8 @@ const RightSidebar = ({ project, onClose, isMobileFull, isExpanded, onToggleExpa
         {isMobileFull ? (
             <button onClick={onClose} className="text-white"><ChevronDown size={28} /></button>
         ) : (
-            <span className="font-bold text-base hover:underline cursor-pointer truncate pr-2 flex-1">
+            // remove truncate to prevent title cutoff
+            <span className="font-bold text-base hover:underline cursor-pointer pr-2 flex-1 leading-tight">
                 {project.title}
             </span>
         )}
@@ -80,7 +81,7 @@ const RightSidebar = ({ project, onClose, isMobileFull, isExpanded, onToggleExpa
 
           {/* info & actions */}
           <div className={`
-              ${isExpanded ? 'max-w-xl flex flex-col justify-center h-full' : 'w-full'}
+              ${isExpanded ? 'max-w-xl flex flex-col justify-start h-full' : 'w-full'}
           `}>
               
               {/* title */}
@@ -106,19 +107,28 @@ const RightSidebar = ({ project, onClose, isMobileFull, isExpanded, onToggleExpa
                   </div>
               )}
 
-              {/* expanded description */}
-              {isExpanded && (
-                  <div className="mb-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                      <h3 className="text-xl font-bold mb-2 text-white">About this project</h3>
-                      <p className="text-gray-300 text-lg leading-relaxed">
-                          {project.description || "A comprehensive mobile application tailored for outdoor enthusiasts. This project involves complex state management, real-time data synchronization, and a custom design system."}
+              {/* description & problem solved */}
+              <div className="mb-8 space-y-6">
+                  <div>
+                      <h3 className="text-sm font-bold text-gray-300 uppercase tracking-wider mb-2">Description</h3>
+                      <p className="text-gray-400 text-sm md:text-base leading-relaxed">
+                          {project.description || "No description provided."}
                       </p>
                   </div>
-              )}
+
+                  {project.problemSolved && (
+                      <div>
+                          <h3 className="text-sm font-bold text-gray-300 uppercase tracking-wider mb-2">Problem Solved</h3>
+                          <p className="text-gray-400 text-sm md:text-base leading-relaxed italic border-l-2 border-green-500 pl-3">
+                              "{project.problemSolved}"
+                          </p>
+                      </div>
+                  )}
+              </div>
 
               {/* tech stack */}
               <div className="flex flex-wrap gap-2 mb-8">
-                {project.techStack.map((tech, idx) => (
+                {project.techStack && project.techStack.map((tech, idx) => (
                     <span key={idx} className="text-xs font-bold bg-[#2a2a2a] px-3 py-1.5 rounded-full text-white border border-transparent hover:border-gray-500 transition cursor-default">
                         {tech}
                     </span>
@@ -127,10 +137,10 @@ const RightSidebar = ({ project, onClose, isMobileFull, isExpanded, onToggleExpa
 
               {/* action buttons */}
               <div className="grid grid-cols-2 gap-4 mb-8">
-                   <a href={project.githubLink || "#"} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 bg-[#1ed760] text-black font-bold py-3 rounded-full hover:scale-105 hover:brightness-105 transition text-sm">
+                   <a href={project.githubLink || "#"} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 bg-[#1ed760] hover:bg-[#1db954] text-black font-bold py-3 rounded-full transition transform hover:scale-105 active:scale-95 text-sm">
                       <Github size={20}/> Code
                    </a>
-                   <a href={project.demoLink || "#"} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 border border-gray-500 text-white font-bold py-3 rounded-full hover:border-white hover:scale-105 transition text-sm">
+                   <a href={project.demoLink || "#"} target="_blank" rel="noreferrer" className="flex items-center justify-center gap-2 border border-gray-500 text-white font-bold py-3 rounded-full hover:border-white transition transform hover:scale-105 active:scale-95 text-sm">
                       <ExternalLink size={20}/> Demo
                    </a>
               </div>
@@ -147,7 +157,7 @@ const RightSidebar = ({ project, onClose, isMobileFull, isExpanded, onToggleExpa
                               <h4 className="font-bold text-sm">Fatiya Labibah</h4>
                               <p className="text-xs text-gray-400">Creator</p>
                           </div>
-                          <button className="border border-gray-600 px-3 py-1 rounded-full text-xs font-bold">Follow</button>
+                          <button className="border border-gray-600 px-3 py-1 rounded-full text-xs font-bold hover:border-white transition">Follow</button>
                       </div>
                   </div>
               )}
