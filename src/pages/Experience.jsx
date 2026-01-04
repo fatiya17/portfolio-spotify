@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Briefcase, Calendar, MapPin } from 'lucide-react';
+import { Briefcase, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 
 // DATA DUMMY
@@ -30,21 +30,51 @@ const EXPERIENCE_DATA = [
 const Experience = () => {
   return (
     <PageTransition>
-      <div className="h-full overflow-y-auto custom-scrollbar bg-gradient-to-b from-[#1e1e1e] to-[#121212] pb-32">
+      <div className="h-full overflow-y-auto custom-scrollbar bg-[#121212] pb-32 md:pb-0">
+         
          {/* header */}
-         <div className="px-6 pt-20 md:pt-8 pb-6 bg-gradient-to-b from-[#51df82] via-[#1d6d48] to-[#121212]">
-            <h1 className="text-4xl md:text-5xl font-black text-white mb-2">Work Experience</h1>
-            <p className="text-gray-400">My professional career journey.</p>
-         </div>
+         <section className="relative pt-20 md:pt-24 pb-6 px-4 md:px-8 bg-gradient-to-b from-[#1d6d48] via-[#12422c] to-[#121212] flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-8 transition-all">
+            
+            {/* cover image */}
+            <div className="shrink-0 shadow-[0_8px_40px_rgba(0,0,0,0.6)] md:shadow-2xl mx-auto md:mx-0">
+              <img
+                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=500" 
+                alt="Experience Cover"
+                className="w-[200px] h-[200px] md:w-60 md:h-60 object-cover shadow-2xl rounded-md md:rounded-none"
+              />
+            </div>
 
-         <div className="px-6 space-y-4">
+            {/* metadata text */}
+            <div className="flex flex-col gap-1 text-left w-full">
+              <span className="uppercase text-[10px] md:text-xs font-bold tracking-widest text-white hidden md:block">
+                Career History
+              </span>
+
+              <h1 className="text-3xl md:text-5xl lg:text-7xl font-black tracking-tighter text-white drop-shadow-lg mb-1 md:mb-2">
+                Work Experience
+              </h1>
+
+              <p className="text-gray-300/90 text-xs md:text-sm font-medium max-w-xl">
+                My professional journey, internships, and work history.
+              </p>
+
+              <div className="flex items-center gap-1 text-xs md:text-sm text-gray-300 mt-2 font-medium">
+                <CheckCircle2 size={16} className="text-green-500 fill-black" />
+                <span>Verified Professional</span>
+                <span className="mx-1">•</span>
+                <span>{EXPERIENCE_DATA.length} roles</span>
+              </div>
+            </div>
+         </section>
+
+         <div className="px-4 md:px-8 space-y-4 pb-24 mt-4">
             {EXPERIENCE_DATA.map((item, idx) => (
                <motion.div 
                   key={item.id}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.1 }}
-                  className="bg-[#181818] p-5 rounded-lg hover:bg-[#282828] transition border border-transparent hover:border-[#333] flex flex-col md:flex-row gap-4"
+                  className="bg-[#181818] p-5 rounded-lg hover:bg-[#282828] transition border border-transparent hover:border-[#333] flex flex-col md:flex-row gap-4 group"
                >
                   <div className="md:w-48 shrink-0 flex flex-col gap-1">
                       <span className="text-white font-bold text-sm flex items-center gap-2">
@@ -56,7 +86,7 @@ const Experience = () => {
                       </span>
                    </div>
                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-white">{item.role}</h3>
+                      <h3 className="text-xl font-bold text-white group-hover:text-green-400 transition">{item.role}</h3>
                       <p className="text-spotify-green text-sm font-bold mb-2">{item.company}</p>
                       <p className="text-gray-400 text-sm leading-relaxed mb-3">{item.description}</p>
                       <div className="flex flex-wrap gap-2">
