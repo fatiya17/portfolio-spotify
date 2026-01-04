@@ -27,37 +27,32 @@ const Education = () => {
       <div className="h-full overflow-y-auto bg-[#121212] pb-32 md:pb-0 custom-scrollbar">
 
         {/* header consistent with home */}
-        <section className="relative pt-20 md:pt-24 pb-6 px-4 md:px-8 bg-gradient-to-b from-[#3b65bd] via-[#243e73] to-[#121212] flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-8 transition-all">
+        <div className="relative bg-gradient-to-b from-[#3b65bd] via-[#243e73] to-[#121212] pt-24 pb-12 px-6 md:px-10 lg:px-14 flex flex-col md:flex-row items-end gap-6 md:gap-10 transition-colors duration-500">
             
-            {/* cover image */}
-            <div className="shrink-0 shadow-[0_8px_40px_rgba(0,0,0,0.6)] md:shadow-2xl mx-auto md:mx-0">
-              <div className="w-[200px] h-[200px] md:w-60 md:h-60 bg-[#2a2a2a] flex items-center justify-center shadow-2xl rounded-md md:rounded-none">
-                 <GraduationCap size={80} className="text-blue-400"/>
-              </div>
-            </div>
+            {/* icon */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="w-32 h-32 md:w-52 md:h-52 bg-[#2a2a2a] shadow-[0_8px_40px_rgba(0,0,0,0.5)] rounded-full md:rounded-md flex items-center justify-center shrink-0 group hover:scale-105 transition-transform duration-500"
+            >
+               <GraduationCap className="text-blue-400 drop-shadow-md w-14 h-14 md:w-24 md:h-24 group-hover:rotate-12 transition-transform duration-500"/>
+            </motion.div>
 
-            {/* metadata text */}
-            <div className="flex flex-col gap-1 text-left w-full">
-              <span className="uppercase text-[10px] md:text-xs font-bold tracking-widest text-white hidden md:block">
+            {/* title */}
+            <div className="flex flex-col gap-2 w-full z-10 pb-1">
+              <span className="text-xs font-bold tracking-widest uppercase text-white flex items-center gap-1.5">
+                <GraduationCap size={16} className="text-blue-400 fill-white" />{" "}
                 Academic Background
               </span>
-
-              <h1 className="text-3xl md:text-5xl lg:text-7xl font-black tracking-tighter text-white drop-shadow-lg mb-2">
+              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white drop-shadow-2xl leading-tight">
                 Education
               </h1>
-
-              <p className="text-gray-300/90 text-xs md:text-sm font-medium max-w-xl">
+              <p className="text-gray-300 font-medium text-sm md:text-base mt-3 max-w-2xl leading-relaxed">
                 Degrees, certifications, and academic achievements.
               </p>
-
-              <div className="flex items-center gap-1 text-xs md:text-sm text-gray-300 mt-2 font-medium">
-                <Award size={16} className="text-blue-400" />
-                <span className="font-bold text-white">Fatiya Dev</span>
-                <span className="mx-1">•</span>
-                <span>{educationData.length} milestones</span>
-              </div>
             </div>
-         </section>
+         </div>
 
         {/* content */}
         <div className="px-4 md:px-8 grid grid-cols-1 gap-4 mt-6 pb-24">

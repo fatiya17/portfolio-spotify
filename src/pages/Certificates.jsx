@@ -27,38 +27,32 @@ const Certificates = () => {
     <PageTransition>
       <div className="h-full overflow-y-auto custom-scrollbar bg-[#121212] pb-32 md:pb-0">
          
-         {/* header */}
-         <section className="relative pt-20 md:pt-24 pb-6 px-4 md:px-8 bg-gradient-to-b from-[#d7a332] via-[#8a6820] to-[#121212] flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-8 transition-all">
-            
-            {/* cover image */}
-            <div className="shrink-0 shadow-[0_8px_40px_rgba(0,0,0,0.6)] md:shadow-2xl mx-auto md:mx-0">
-              <div className="w-[200px] h-[200px] md:w-60 md:h-60 bg-[#2a2a2a] flex items-center justify-center shadow-2xl rounded-md md:rounded-none">
-                 <Award size={80} className="text-yellow-400"/>
-              </div>
-            </div>
+        {/* header */}
+        <div className="relative bg-gradient-to-b from-[#d7a332] via-[#8a6820] to-[#121212] pt-24 pb-12 px-6 md:px-10 lg:px-14 flex flex-col md:flex-row items-end gap-6 md:gap-10 transition-colors duration-500">
+          {/* icon */}
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="w-32 h-32 md:w-52 md:h-52 bg-[#2a2a2a] shadow-[0_8px_40px_rgba(0,0,0,0.5)] rounded-full md:rounded-md flex items-center justify-center shrink-0 group hover:scale-105 transition-transform duration-500"
+          >
+            <Award className="text-yellow-400 drop-shadow-md w-14 h-14 md:w-24 md:h-24 group-hover:rotate-12 transition-transform duration-500" />
+          </motion.div>
 
-            {/* metadata text */}
-            <div className="flex flex-col gap-1 text-left w-full">
-              <span className="uppercase text-[10px] md:text-xs font-bold tracking-widest text-white hidden md:block">
-                Achievements
-              </span>
-
-              <h1 className="text-3xl md:text-5xl lg:text-7xl font-black tracking-tighter text-white drop-shadow-lg mb-1 md:mb-2">
-                Certificates
-              </h1>
-
-              <p className="text-gray-300/90 text-xs md:text-sm font-medium max-w-xl">
-                Professional credentials, badges, and awards.
-              </p>
-
-              <div className="flex items-center gap-1 text-xs md:text-sm text-gray-300 mt-2 font-medium">
-                <Star size={16} className="text-yellow-400 fill-white" />
-                <span>Certified</span>
-                <span className="mx-1">•</span>
-                <span>{certificates.length} credentials</span>
-              </div>
-            </div>
-         </section>
+          {/* title */}
+          <div className="flex flex-col gap-2 w-full z-10 pb-1">
+            <span className="text-xs font-bold tracking-widest uppercase text-white flex items-center gap-1.5">
+              <Award size={16} className="text-yellow-400 fill-white" />{" "}
+              Achievements
+            </span>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white drop-shadow-2xl leading-tight">
+              Certificates
+            </h1>
+            <p className="text-gray-300 font-medium text-sm md:text-base mt-3 max-w-2xl leading-relaxed">
+              Professional credentials, badges, and awards.
+            </p>
+          </div>
+        </div>
 
          {/* grid certificates */}
          <div className="px-4 md:px-8 pb-24 mt-4">
