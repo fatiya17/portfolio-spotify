@@ -71,18 +71,25 @@ const Projects = () => {
             <LayoutGrid className="text-purple-400 drop-shadow-md w-14 h-14 md:w-24 md:h-24 group-hover:rotate-12 transition-transform duration-500" />
           </motion.div>
 
-          {/* title */}
-          <div className="flex flex-col gap-2 w-full z-10 pb-1">
-            <span className="text-xs font-bold tracking-widest uppercase text-white flex items-center gap-1.5">
-              <LayoutGrid size={16} className="text-purple-400 fill-white" />{" "}
+          {/* metadata text */}
+          <div className="flex flex-col gap-1 text-left w-full">
+            <span className="uppercase text-[10px] md:text-xs font-bold tracking-widest text-white hidden md:block">
               Public Playlist
             </span>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white drop-shadow-2xl leading-tight">
+
+            <h1 className="text-3xl md:text-5xl lg:text-7xl font-black tracking-tighter text-white drop-shadow-lg mb-1 md:mb-2">
               Your Projects
             </h1>
-            <p className="text-gray-300 font-medium text-sm md:text-base mt-3 max-w-2xl leading-relaxed">
+
+            <p className="text-gray-300/90 text-xs md:text-sm font-medium max-w-xl line-clamp-2 md:line-clamp-none">
                {searchQuery ? `Search result for "${searchQuery}"` : "A collection of applications and interfaces I have built."}
             </p>
+
+            <div className="flex items-center gap-1 text-xs md:text-sm text-gray-300 mt-2 font-medium">
+              <span className="font-bold text-white">Fatiya Labibah</span>
+              <span className="mx-1">•</span>
+              <span>{projects.length} songs (projects), approx 2 hr 15 min</span>
+            </div>
           </div>
         </div>
 
@@ -92,7 +99,11 @@ const Projects = () => {
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-4 py-1.5 rounded-full text-sm font-bold transition
+              className={`
+                px-3 py-1.5 md:px-4 md:py-1.5 
+                rounded-full 
+                text-xs md:text-sm 
+                font-bold transition border border-transparent whitespace-nowrap
                 ${
                   filter === cat
                     ? "bg-white text-black"
