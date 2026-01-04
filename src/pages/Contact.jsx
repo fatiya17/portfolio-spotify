@@ -85,7 +85,7 @@ const Contact = () => {
               <CheckCircle2 size={16} className="text-[#3D91F4] fill-white" />{" "}
               Verified Contact
             </span>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white drop-shadow-2xl leading-tight">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl  font-black tracking-tighter text-white drop-shadow-2xl leading-tight">
               Get in Touch
             </h1>
             <p className="text-gray-300 font-medium text-sm md:text-base mt-3 max-w-2xl leading-relaxed">
