@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Save, Loader, UploadCloud } from 'lucide-react';
+import { X, Save, Loader, UploadCloud, Plus, Trash2 } from 'lucide-react';
 
 const AdminModal = ({ isOpen, onClose, title, fields, initialData, onSubmit, isSubmitting }) => {
   const [formData, setFormData] = useState({});
@@ -9,16 +9,19 @@ const AdminModal = ({ isOpen, onClose, title, fields, initialData, onSubmit, isS
     if (isOpen) {
         if (initialData) {
             const formattedData = { ...initialData };
-            // handle array fields for editing
             fields.forEach(field => {
                 if (field.type === 'array' && Array.isArray(initialData[field.name])) {
                     formattedData[field.name] = initialData[field.name].join(', ');
                 }
+                // handle gallery preview initialization
+                if (field.type === 'gallery' && Array.isArray(initialData[field.name])) {
+                   // gallery data is already in correct format, just ensure it exists
+                   formattedData[field.name] = initialData[field.name];
+                }
             });
             setFormData(formattedData);
-            // set preview if existing image
             if (initialData.imageUrl) {
-                setPreviews({ imageUrl: initialData.imageUrl });
+                setPreviews(prev => ({ ...prev, imageUrl: initialData.imageUrl }));
             }
         } else {
             setFormData({});
@@ -31,7 +34,7 @@ const AdminModal = ({ isOpen, onClose, title, fields, initialData, onSubmit, isS
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // handle file upload -> convert to base64
+  // handle single file upload
   const handleFileChange = (e, fieldName) => {
     const file = e.target.files[0];
     if (file) {
@@ -44,13 +47,43 @@ const AdminModal = ({ isOpen, onClose, title, fields, initialData, onSubmit, isS
     }
   };
 
+  // --- gallery handlers ---
+  const addGalleryItem = (fieldName) => {
+    const currentGallery = formData[fieldName] || [];
+    setFormData({ ...formData, [fieldName]: [...currentGallery, { url: '', caption: '' }] });
+  };
+
+  const removeGalleryItem = (fieldName, index) => {
+    const currentGallery = [...(formData[fieldName] || [])];
+    currentGallery.splice(index, 1);
+    setFormData({ ...formData, [fieldName]: currentGallery });
+  };
+
+  const handleGalleryCaptionChange = (fieldName, index, value) => {
+    const currentGallery = [...(formData[fieldName] || [])];
+    currentGallery[index].caption = value;
+    setFormData({ ...formData, [fieldName]: currentGallery });
+  };
+
+  const handleGalleryImageUpload = (e, fieldName, index) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const currentGallery = [...(formData[fieldName] || [])];
+        currentGallery[index].url = reader.result;
+        setFormData({ ...formData, [fieldName]: currentGallery });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const processedData = { ...formData };
     
-    // convert array strings back to arrays
     fields.forEach(field => {
-        if (field.type === 'array') {
+        if (field.type === 'array' && typeof formData[field.name] === 'string') {
             const val = formData[field.name];
             processedData[field.name] = val ? val.split(',').map(s => s.trim()).filter(s => s) : [];
         }
@@ -92,7 +125,6 @@ const AdminModal = ({ isOpen, onClose, title, fields, initialData, onSubmit, isS
                     className="bg-[#2a2a2a] border border-transparent focus:border-green-500 rounded p-3 text-white outline-none transition placeholder-gray-600 resize-none"
                   />
                 ) : field.type === 'image' ? (
-                   /* custom image input */
                    <div className="flex flex-col gap-3">
                       <div className="flex items-center gap-4">
                         {previews[field.name] && (
@@ -113,7 +145,6 @@ const AdminModal = ({ isOpen, onClose, title, fields, initialData, onSubmit, isS
                             />
                         </label>
                       </div>
-                      {/* fallback text input for url */}
                       <input
                         type="text"
                         name={field.name}
@@ -123,6 +154,40 @@ const AdminModal = ({ isOpen, onClose, title, fields, initialData, onSubmit, isS
                         className="bg-[#2a2a2a] border border-transparent focus:border-green-500 rounded p-3 text-white outline-none transition placeholder-gray-600 text-sm"
                       />
                    </div>
+                ) : field.type === 'gallery' ? (
+                    // --- gallery input section ---
+                    <div className="space-y-3">
+                        {(formData[field.name] || []).map((item, idx) => (
+                            <div key={idx} className="bg-[#222] p-3 rounded border border-[#333] flex gap-3 items-start">
+                                <div className="w-20 h-20 bg-[#111] rounded overflow-hidden shrink-0 flex items-center justify-center border border-[#444]">
+                                    {item.url ? (
+                                        <img src={item.url} alt="gal" className="w-full h-full object-cover" />
+                                    ) : (
+                                        <UploadCloud size={20} className="text-gray-500" />
+                                    )}
+                                </div>
+                                <div className="flex-1 space-y-2">
+                                    <label className="cursor-pointer bg-[#333] hover:bg-[#444] text-xs px-2 py-1 rounded text-white inline-block">
+                                        Upload Image
+                                        <input type="file" accept="image/*" className="hidden" onChange={(e) => handleGalleryImageUpload(e, field.name, idx)} />
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        placeholder="Caption..." 
+                                        value={item.caption}
+                                        onChange={(e) => handleGalleryCaptionChange(field.name, idx, e.target.value)}
+                                        className="w-full bg-[#111] border border-[#444] rounded p-2 text-sm text-white"
+                                    />
+                                </div>
+                                <button type="button" onClick={() => removeGalleryItem(field.name, idx)} className="text-red-400 hover:text-red-300 p-1">
+                                    <Trash2 size={18} />
+                                </button>
+                            </div>
+                        ))}
+                        <button type="button" onClick={() => addGalleryItem(field.name)} className="flex items-center gap-2 text-sm text-green-400 hover:text-green-300 font-bold">
+                            <Plus size={16} /> Add Gallery Image
+                        </button>
+                    </div>
                 ) : (
                   <input
                     type={field.type === 'number' ? 'number' : 'text'}

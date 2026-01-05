@@ -60,6 +60,30 @@ const ManageProjects = () => {
       placeholder: "e.g. Spotify Clone",
     },
     {
+      name: "projectType",
+      label: "Type (Individual/Group)",
+      type: "text",
+      placeholder: "e.g. Individual",
+    },
+    {
+      name: "teamSize",
+      label: "Team Size",
+      type: "number",
+      placeholder: "e.g. 1",
+    },
+    {
+      name: "duration",
+      label: "Duration",
+      type: "text",
+      placeholder: "e.g. 2 Months",
+    },
+    {
+      name: "year",
+      label: "Year",
+      type: "text",
+      placeholder: "e.g. 2025",
+    },
+    {
       name: "category",
       label: "Category",
       type: "text",
@@ -67,9 +91,15 @@ const ManageProjects = () => {
     },
     {
       name: "imageUrl",
-      label: "Image",
+      label: "Cover Image (Main)",
       type: "image",
       placeholder: "Upload or paste URL...",
+    },
+    // --- added gallery field here ---
+    {
+      name: "gallery",
+      label: "Project Gallery (Multiple Images)",
+      type: "gallery", // make sure adminmodal handles this type
     },
     {
       name: "techStack",
