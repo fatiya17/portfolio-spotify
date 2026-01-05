@@ -85,7 +85,7 @@ const Sidebar = ({ isOpen, onClose }) => {
       id: 'tech',
       title: 'Tech Stack',
       subtitle: 'Skills & Tools',
-      icon: <Code size={20} className="text-pink-400" />,
+      icon: <Code size={20} className="text-orange-400" />,
       bg: 'bg-[#2a2a2a]',
       path: '/skills'
     },
