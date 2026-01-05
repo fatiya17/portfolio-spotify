@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { LayoutGrid, Loader } from "lucide-react"; 
+import { LayoutGrid, Loader, FolderKanban  } from "lucide-react"; 
 import ProjectCard from "../components/ProjectCard";
 import PageTransition from "../components/PageTransition";
 
@@ -68,7 +68,7 @@ const Projects = () => {
             transition={{ duration: 0.5 }}
             className="w-32 h-32 md:w-52 md:h-52 bg-[#2a2a2a] shadow-[0_8px_40px_rgba(0,0,0,0.5)] rounded-full md:rounded-md flex items-center justify-center shrink-0 group hover:scale-105 transition-transform duration-500"
           >
-            <LayoutGrid className="text-purple-400 drop-shadow-md w-14 h-14 md:w-24 md:h-24 group-hover:rotate-12 transition-transform duration-500" />
+            <FolderKanban className="text-purple-400 drop-shadow-md w-14 h-14 md:w-24 md:h-24 group-hover:rotate-6 transition-transform duration-500" />
           </motion.div>
 
           {/* metadata text */}
@@ -78,7 +78,7 @@ const Projects = () => {
             </span>
 
             <h1 className="text-3xl md:text-5xl lg:text-7xl font-black tracking-tighter text-white drop-shadow-lg mb-1 md:mb-2">
-              Your Projects
+              My Projects
             </h1>
 
             <p className="text-gray-300/90 text-xs md:text-sm font-medium max-w-xl line-clamp-2 md:line-clamp-none">
