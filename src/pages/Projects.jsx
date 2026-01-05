@@ -78,7 +78,7 @@ const Projects = () => {
             </span>
 
             <h1 className="text-3xl md:text-5xl lg:text-7xl font-black tracking-tighter text-white drop-shadow-lg mb-1 md:mb-2">
-              My Projects
+              Things I’ve Built
             </h1>
 
             <p className="text-gray-300/90 text-xs md:text-sm font-medium max-w-xl line-clamp-2 md:line-clamp-none">
