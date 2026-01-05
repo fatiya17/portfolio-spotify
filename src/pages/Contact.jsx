@@ -9,7 +9,6 @@ import {
   Instagram,
   ArrowUpRight,
   MessageSquare,
-  User,
   CheckCircle2,
 } from "lucide-react";
 import PageTransition from "../components/PageTransition";
@@ -45,6 +44,7 @@ const SOCIAL_LINKS = [
 const Contact = () => {
   const [focusedField, setFocusedField] = useState(null);
 
+  // autofill style not used directly but kept for reference if needed
   const autofillStyle = {
     WebkitBoxShadow: "0 0 0 30px #2a2a2a inset",
     WebkitTextFillColor: "white",
@@ -69,12 +69,12 @@ const Contact = () => {
       <div className="h-full overflow-y-auto custom-scrollbar bg-[#121212] pb-32">
         {/* header */}
         <div className="relative bg-gradient-to-b from-[#535353] via-[#2a2a2a] to-[#121212] pt-24 pb-12 px-6 md:px-10 lg:px-14 flex flex-col md:flex-row items-end gap-6 md:gap-10 transition-colors duration-500">
-          {/* icon */}
+          {/* icon - changed gradient to pink */}
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="w-32 h-32 md:w-52 md:h-52 bg-gradient-to-br from-indigo-500 to-purple-600 shadow-[0_8px_40px_rgba(0,0,0,0.5)] rounded-full md:rounded-md flex items-center justify-center shrink-0 group hover:scale-105 transition-transform duration-500"
+            className="w-32 h-32 md:w-52 md:h-52 bg-gradient-to-br from-pink-500 to-rose-600 shadow-[0_8px_40px_rgba(0,0,0,0.5)] rounded-full md:rounded-md flex items-center justify-center shrink-0 group hover:scale-105 transition-transform duration-500"
           >
             <MessageSquare className="text-white drop-shadow-md w-14 h-14 md:w-24 md:h-24 group-hover:rotate-12 transition-transform duration-500" />
           </motion.div>
@@ -82,7 +82,7 @@ const Contact = () => {
           {/* title */}
           <div className="flex flex-col gap-2 w-full z-10 pb-1">
             <span className="text-xs font-bold tracking-widest uppercase text-white flex items-center gap-1.5">
-              <CheckCircle2 size={16} className="text-[#3D91F4] fill-white" />{" "}
+              <CheckCircle2 size={16} className="text-pink-500 fill-white" />{" "}
               Verified Contact
             </span>
             <h1 className="text-4xl sm:text-6xl md:text-7xl  font-black tracking-tighter text-white drop-shadow-2xl leading-tight">
@@ -120,14 +120,14 @@ const Contact = () => {
               className="bg-[#181818] hover:bg-[#282828] p-4 md:p-5 rounded-lg group transition duration-300 border border-transparent hover:border-[#333] cursor-pointer"
             >
               <div className="flex items-center gap-3 md:gap-5">
-                {/* Icon: Lebih kecil di Mobile (w-10/w-12) agar hemat ruang */}
-                <div className="w-12 h-12 md:w-14 md:h-14 bg-green-500 rounded-full flex items-center justify-center text-black shadow-lg group-hover:scale-110 transition shrink-0">
+                {/* Icon: Lebih kecil di Mobile (w-10/w-12) agar hemat ruang - changed to pink bg */}
+                <div className="w-12 h-12 md:w-14 md:h-14 bg-pink-500 rounded-full flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition shrink-0">
                   <Mail className="w-5 h-5 md:w-6 md:h-6" />
                 </div>
 
                 {/* Text Area */}
                 <div className="overflow-hidden min-w-0 flex-1">
-                  <p className="text-gray-400 text-[10px] uppercase font-bold tracking-widest mb-0.5 md:mb-1 group-hover:text-green-400 transition">
+                  <p className="text-gray-400 text-[10px] uppercase font-bold tracking-widest mb-0.5 md:mb-1 group-hover:text-pink-400 transition">
                     Primary Email
                   </p>
 
@@ -185,7 +185,7 @@ const Contact = () => {
 
             {/* location badge */}
             <div className="inline-flex items-center gap-3 text-gray-400 text-sm mt-4 px-4 py-2 bg-[#181818] rounded-full border border-transparent hover:border-[#333] transition">
-              <MapPin size={16} className="text-red-500" />
+              <MapPin size={16} className="text-pink-500" />
               <span>
                 Based in <b className="text-white">Bogor Regency, Indonesia</b>
               </span>
@@ -212,7 +212,7 @@ const Contact = () => {
                   <label
                     className={`text-[11px] font-bold tracking-widest transition-colors ${
                       focusedField === "name"
-                        ? "text-[#1ed760]"
+                        ? "text-pink-400"
                         : "text-gray-400"
                     }`}
                   >
@@ -224,7 +224,7 @@ const Contact = () => {
                     placeholder="What's your name?"
                     onFocus={() => setFocusedField("name")}
                     onBlur={() => setFocusedField(null)}
-                    className="w-full bg-[#2a2a2a] hover:bg-[#3E3E3E] focus:bg-[#333] text-white rounded-md p-3.5 outline-none border border-transparent focus:border-[#1ed760] transition-all font-medium placeholder-gray-500 shadow-sm"
+                    className="w-full bg-[#2a2a2a] hover:bg-[#3E3E3E] focus:bg-[#333] text-white rounded-md p-3.5 outline-none border border-transparent focus:border-pink-500 transition-all font-medium placeholder-gray-500 shadow-sm"
                   />
                 </div>
 
@@ -233,7 +233,7 @@ const Contact = () => {
                   <label
                     className={`text-[11px] font-bold tracking-widest transition-colors ${
                       focusedField === "email"
-                        ? "text-[#1ed760]"
+                        ? "text-pink-400"
                         : "text-gray-400"
                     }`}
                   >
@@ -244,7 +244,7 @@ const Contact = () => {
                     placeholder="name@example.com"
                     onFocus={() => setFocusedField("email")}
                     onBlur={() => setFocusedField(null)}
-                    className="w-full bg-[#2a2a2a] hover:bg-[#3E3E3E] focus:bg-[#333] text-white rounded-md p-3.5 outline-none border border-transparent focus:border-[#1ed760] transition-all font-medium placeholder-gray-500 shadow-sm"
+                    className="w-full bg-[#2a2a2a] hover:bg-[#3E3E3E] focus:bg-[#333] text-white rounded-md p-3.5 outline-none border border-transparent focus:border-pink-500 transition-all font-medium placeholder-gray-500 shadow-sm"
                   />
                 </div>
               </div>
@@ -254,7 +254,7 @@ const Contact = () => {
                 <label
                   className={`text-[11px] font-bold tracking-widest transition-colors ${
                     focusedField === "subject"
-                      ? "text-[#1ed760]"
+                      ? "text-pink-400"
                       : "text-gray-400"
                   }`}
                 >
@@ -265,7 +265,7 @@ const Contact = () => {
                   placeholder="Project Inquiry / Collab"
                   onFocus={() => setFocusedField("subject")}
                   onBlur={() => setFocusedField(null)}
-                  className="w-full bg-[#2a2a2a] hover:bg-[#3E3E3E] focus:bg-[#333] text-white rounded-md p-3.5 outline-none border border-transparent focus:border-[#1ed760] transition-all font-medium placeholder-gray-500 shadow-sm"
+                  className="w-full bg-[#2a2a2a] hover:bg-[#3E3E3E] focus:bg-[#333] text-white rounded-md p-3.5 outline-none border border-transparent focus:border-pink-500 transition-all font-medium placeholder-gray-500 shadow-sm"
                 />
               </div>
 
@@ -274,7 +274,7 @@ const Contact = () => {
                 <label
                   className={`text-[11px] font-bold tracking-widest transition-colors ${
                     focusedField === "message"
-                      ? "text-[#1ed760]"
+                      ? "text-pink-400"
                       : "text-gray-400"
                   }`}
                 >
@@ -285,21 +285,21 @@ const Contact = () => {
                   placeholder="Tell me more about your project..."
                   onFocus={() => setFocusedField("message")}
                   onBlur={() => setFocusedField(null)}
-                  className="w-full bg-[#2a2a2a] hover:bg-[#3E3E3E] focus:bg-[#333] text-white rounded-md p-3.5 outline-none border border-transparent focus:border-[#1ed760] transition-all font-medium placeholder-gray-500 resize-none shadow-sm"
+                  className="w-full bg-[#2a2a2a] hover:bg-[#3E3E3E] focus:bg-[#333] text-white rounded-md p-3.5 outline-none border border-transparent focus:border-pink-500 transition-all font-medium placeholder-gray-500 resize-none shadow-sm"
                 ></textarea>
               </div>
 
-              {/* submit button */}
+              {/* submit button - pink style */}
               <div className="pt-2 flex justify-end">
                 <button
                   type="button"
                   className="
                                 w-full md:w-auto
-                                bg-[#1ed760] hover:bg-[#1db954] text-black font-bold 
+                                bg-pink-600 hover:bg-pink-500 text-white font-bold 
                                 py-3.5 px-10 rounded-full 
                                 transition-all transform hover:scale-105 active:scale-95 
                                 flex items-center justify-center gap-2 
-                                shadow-lg shadow-green-900/20
+                                shadow-lg shadow-pink-900/20
                             "
                 >
                   Send Message <Send size={18} strokeWidth={2.5} />
