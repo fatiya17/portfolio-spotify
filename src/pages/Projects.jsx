@@ -6,7 +6,7 @@ import { LayoutGrid, Loader, FolderKanban  } from "lucide-react";
 import ProjectCard from "../components/ProjectCard";
 import PageTransition from "../components/PageTransition";
 
-const FILTERS = ["All", "Web Dev", "Mobile Dev", "UI/UX"];
+const FILTERS = ["All", "Website", "Mobile App", "Website App","AI", "UI/UX"];
 
 const Projects = () => {
   const { setSelectedProject, setShowRightSidebar } = useOutletContext();
