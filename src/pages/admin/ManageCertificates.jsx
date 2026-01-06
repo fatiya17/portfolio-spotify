@@ -60,9 +60,9 @@ const ManageCertificates = () => {
     },
     {
       name: "imageUrl",
-      label: "Image URL",
-      type: "text",
-      placeholder: "https://...",
+      label: "Certificate Image",
+      type: "image", // changed to image type for upload support
+      placeholder: "Upload or paste URL...",
     },
     {
       name: "description",
