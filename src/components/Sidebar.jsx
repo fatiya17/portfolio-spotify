@@ -4,6 +4,7 @@ import {
   Briefcase, GraduationCap, Award, Heart, Layers3, X, Mail
 } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Sidebar = ({ isOpen, onClose }) => {
   const MIN_WIDTH = 72;    
@@ -12,6 +13,8 @@ const Sidebar = ({ isOpen, onClose }) => {
 
   const [width, setWidth] = useState(280); 
   const [isResizing, setIsResizing] = useState(false);
+  const [projectCount, setProjectCount] = useState(0);
+  const [certificateCount, setCertificateCount] = useState(0);
   const sidebarRef = useRef(null);
   const navigate = useNavigate();
 
@@ -47,11 +50,27 @@ const Sidebar = ({ isOpen, onClose }) => {
     };
   }, [isResizing]);
 
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const [projectsRes, certificatesRes] = await Promise.all([
+          axios.get('http://localhost:5000/api/projects'),
+          axios.get('http://localhost:5000/api/certificates')
+        ]);
+        setProjectCount(projectsRes.data.length);
+        setCertificateCount(certificatesRes.data.length);
+      } catch (error) {
+        console.error('Error fetching counts:', error);
+      }
+    };
+    fetchCounts();
+  }, []);
+
   const LIBRARY_ITEMS = [
     {
       id: 'liked',
       title: 'Liked Projects',
-      subtitle: 'Pinned • 12 projects',
+      subtitle: `Pinned • ${projectCount} projects`,
       icon: <Heart size={20} className="text-white fill-current" />,
       bg: 'bg-gradient-to-br from-[#450af5] to-[#c4efd9]',
       path: '/projects', 
@@ -76,7 +95,7 @@ const Sidebar = ({ isOpen, onClose }) => {
     {
       id: 'cert',
       title: 'Certificates',
-      subtitle: '4 Credentials',
+      subtitle: `${certificateCount} Credentials`,
       icon: <Award size={20} className="text-yellow-500" />,
       bg: 'bg-[#2a2a2a]',
       path: '/certificates'
