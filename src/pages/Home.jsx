@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useOutletContext } from 'react-router-dom'; 
+import { useOutletContext, useNavigate } from 'react-router-dom'; 
 import { 
   BadgeCheck, Play, MoreHorizontal, 
   Github, Linkedin, Mail, ArrowDownCircle, Shuffle, Loader
@@ -10,6 +10,7 @@ import PageTransition from '../components/PageTransition';
 const Home = () => {
   // get context from layout
   const { setSelectedProject, setShowRightSidebar } = useOutletContext();
+  const navigate = useNavigate();
   const [hoverRow, setHoverRow] = useState(null);
   
   // state for data
@@ -174,7 +175,7 @@ const Home = () => {
                 </div>
             )}
             
-            <button className="mt-4 px-2 md:px-4 text-xs font-bold text-gray-400 hover:text-white tracking-widest uppercase hover:underline">
+            <button onClick={() => navigate('/projects')} className="mt-4 px-2 md:px-4 text-xs font-bold text-gray-400 hover:text-white tracking-widest uppercase hover:underline">
                 Show More
             </button>
         </div>
