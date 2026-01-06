@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Award, BadgeCheck, ExternalLink, X, FileText, Star, Loader } from 'lucide-react';
+import { Award, BadgeCheck, ExternalLink, X, Loader } from 'lucide-react';
 import PageTransition from '../components/PageTransition';
 
 const Certificates = () => {
@@ -70,27 +70,36 @@ const Certificates = () => {
                        transition={{ delay: idx * 0.1 }}
                        whileHover={{ scale: 1.02 }}
                        onClick={() => setSelectedCert(cert)}
-                       className="group bg-[#181818] hover:bg-[#282828] p-5 rounded-lg transition cursor-pointer relative overflow-hidden border border-transparent hover:border-[#333] flex flex-col h-full"
+                       className="group bg-[#181818] hover:bg-[#282828] p-4 rounded-lg transition cursor-pointer relative overflow-hidden border border-transparent hover:border-[#333] flex flex-col h-full gap-4"
                      >
-                        <div className="flex items-start justify-between mb-4">
-                           <div className="w-12 h-12 bg-yellow-900/30 rounded-lg flex items-center justify-center text-yellow-500 font-bold border border-yellow-700/50">
-                              <Award size={24}/>
-                           </div>
-                           <ExternalLink size={18} className="text-gray-500 group-hover:text-white transition opacity-0 group-hover:opacity-100"/>
+                        {/* image preview area */}
+                        <div className="relative w-full aspect-[4/3] bg-black/20 rounded-md overflow-hidden border border-[#333]">
+                            <img 
+                                src={cert.imageUrl || "https://via.placeholder.com/300"} 
+                                alt={cert.title}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                            {/* overlay icon */}
+                            <div className="absolute top-2 right-2 bg-black/60 p-1.5 rounded-full text-yellow-500 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                                <ExternalLink size={16} />
+                            </div>
                         </div>
-                        
-                        <h3 className="font-bold text-white text-lg line-clamp-2 mb-1 group-hover:text-yellow-500 transition">{cert.title}</h3>
-                        
-                        <div className="flex items-center gap-2 mb-3">
-                           <BadgeCheck size={14} className="text-blue-400 shrink-0"/>
-                           <p className="text-sm text-gray-300 font-medium truncate">{cert.issuer}</p>
-                        </div>
-                        
-                        <div className="border-t border-[#333] pt-3 mt-auto">
-                           <p className="text-xs text-gray-500 font-mono flex justify-between">
+
+                        {/* content area */}
+                        <div className="flex flex-col flex-1">
+                            <h3 className="font-bold text-white text-lg line-clamp-2 mb-1 group-hover:text-yellow-500 transition leading-tight">
+                                {cert.title}
+                            </h3>
+                            
+                            <div className="flex items-center gap-2 mb-3 mt-1">
+                               <BadgeCheck size={14} className="text-blue-400 shrink-0"/>
+                               <p className="text-xs text-gray-400 font-medium truncate">{cert.issuer}</p>
+                            </div>
+                            
+                            <div className="border-t border-[#333] pt-3 mt-auto flex justify-between items-center text-xs text-gray-500 font-mono">
                                <span>{cert.date}</span>
-                               <span>Valid</span>
-                           </p>
+                               <span className="text-green-500 bg-green-900/20 px-2 py-0.5 rounded border border-green-900/30">Valid</span>
+                            </div>
                         </div>
                      </motion.div>
                   ))}
@@ -125,7 +134,7 @@ const Certificates = () => {
                         <X size={18} />
                      </button>
 
-                     <div className="w-full md:w-[55%] bg-black flex items-center justify-center p-4 border-b md:border-b-0 md:border-r border-[#333] shrink-0 h-[180px] md:h-auto relative">
+                     <div className="w-full md:w-[55%] bg-black flex items-center justify-center p-4 border-b md:border-b-0 md:border-r border-[#333] shrink-0 h-[250px] md:h-auto relative">
                         <img 
                            src={selectedCert.imageUrl} 
                            alt={selectedCert.title} 
@@ -165,7 +174,7 @@ const Certificates = () => {
                            <a 
                               href={selectedCert.verifyLink} 
                               target="_blank" 
-                              rel="noreferrer"
+                              rel="noreferrer" 
                               className="flex items-center justify-center gap-2 bg-[#1ed760] hover:bg-[#1db954] text-black font-bold py-2.5 rounded-full transition w-full text-sm hover:scale-[1.02] active:scale-[0.98]"
                            >
                               <ExternalLink size={16} /> Verify Credential
