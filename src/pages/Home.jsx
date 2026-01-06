@@ -83,6 +83,22 @@ const Home = () => {
             <span className="mx-1">•</span>
             <span>2,921,002 monthly listeners</span>
           </div>
+
+          {/* mobile navigation labels */}
+          <div className="md:hidden flex flex-wrap gap-2 mt-3">
+            <button onClick={() => navigate('/experience')} className="px-3 py-1 rounded-full bg-[#2a2a2a] text-white text-xs font-bold hover:bg-[#3E3E3E] transition">
+              Experience
+            </button>
+            <button onClick={() => navigate('/education')} className="px-3 py-1 rounded-full bg-[#2a2a2a] text-white text-xs font-bold hover:bg-[#3E3E3E] transition">
+              Education
+            </button>
+            <button onClick={() => navigate('/certificates')} className="px-3 py-1 rounded-full bg-[#2a2a2a] text-white text-xs font-bold hover:bg-[#3E3E3E] transition">
+              Certificates
+            </button>
+            <button onClick={() => navigate('/skills')} className="px-3 py-1 rounded-full bg-[#2a2a2a] text-white text-xs font-bold hover:bg-[#3E3E3E] transition">
+              Skills
+            </button>
+          </div>
         </div>
       </section>
 
