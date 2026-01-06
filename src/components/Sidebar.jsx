@@ -11,7 +11,12 @@ const Sidebar = ({ isOpen, onClose }) => {
   const SNAP_THRESHOLD = 200; 
   const MAX_WIDTH = 420;   
 
-  const [width, setWidth] = useState(280); 
+  // initialize width from local storage to persist state across page navigation
+  const [width, setWidth] = useState(() => {
+    const savedWidth = localStorage.getItem('sidebarWidth');
+    return savedWidth ? parseInt(savedWidth) : 280;
+  });
+
   const [isResizing, setIsResizing] = useState(false);
   const [projectCount, setProjectCount] = useState(0);
   const [certificateCount, setCertificateCount] = useState(0);
@@ -19,6 +24,11 @@ const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
 
   const isCollapsed = width === MIN_WIDTH;
+
+  // save width to local storage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('sidebarWidth', width.toString());
+  }, [width]);
 
   const startResizing = (e) => {
     setIsResizing(true);
@@ -142,6 +152,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           
           {/* header */}
           <div className={`flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'} px-4 py-3 text-[#b3b3b3] mb-2 shadow-sm shrink-0`}>
+             {/* logic: click library to expand if collapsed */}
              <button 
                 onClick={() => isCollapsed && setWidth(280)}
                 className="flex items-center gap-3 hover:text-white cursor-pointer transition group" 
@@ -155,9 +166,9 @@ const Sidebar = ({ isOpen, onClose }) => {
                <div className="flex gap-2 items-center">
                  <button className="hover:text-white hover:bg-[#2a2a2a] rounded-full p-1 transition"><Plus size={20} /></button>
                  <button 
-                    onClick={() => setWidth(MIN_WIDTH)}
-                    className="hover:text-white hover:bg-[#2a2a2a] rounded-full p-1 transition hidden md:block"
-                    title="Collapse Sidebar"
+                   onClick={() => setWidth(MIN_WIDTH)}
+                   className="hover:text-white hover:bg-[#2a2a2a] rounded-full p-1 transition hidden md:block"
+                   title="Collapse Sidebar"
                  >
                     <ArrowLeft size={20} />
                  </button>
@@ -195,7 +206,8 @@ const Sidebar = ({ isOpen, onClose }) => {
                  <NavLink 
                     key={item.id} 
                     to={item.path}
-                    onClick={onClose}
+                    // on desktop, clicking link should NOT expand/collapse sidebar. only onClose on mobile.
+                    onClick={() => window.innerWidth < 768 && onClose()}
                     className={({ isActive }) => 
                       `flex items-center gap-3 p-2 rounded-md cursor-pointer group ${isCollapsed ? 'justify-center' : ''} ${isActive ? 'bg-[#232323]' : 'hover:bg-[#1f1f1f]'}`
                     }
@@ -206,13 +218,13 @@ const Sidebar = ({ isOpen, onClose }) => {
 
                     {!isCollapsed && (
                       <div className="flex flex-col overflow-hidden justify-center">
-                         <p className={`font-semibold truncate text-sm mb-0.5 ${item.id === 'liked' ? 'text-spotify-green' : 'text-white'}`}>
-                             {item.title}
-                         </p>
-                         <div className="flex items-center gap-2 text-[#b3b3b3] text-xs truncate">
-                             {item.pinned && <Pin size={12} fill="#1ed760" className="text-[#1ed760] shrink-0" />}
-                             <span>{item.subtitle}</span>
-                         </div>
+                          <p className={`font-semibold truncate text-sm mb-0.5 ${item.id === 'liked' ? 'text-spotify-green' : 'text-white'}`}>
+                              {item.title}
+                          </p>
+                          <div className="flex items-center gap-2 text-[#b3b3b3] text-xs truncate">
+                              {item.pinned && <Pin size={12} fill="#1ed760" className="text-[#1ed760] shrink-0" />}
+                              <span>{item.subtitle}</span>
+                          </div>
                       </div>
                     )}
                  </NavLink>
