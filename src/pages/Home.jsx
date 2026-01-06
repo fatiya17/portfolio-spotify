@@ -55,7 +55,7 @@ const Home = () => {
         {/* cover image */}
         <div className="shrink-0 shadow-[0_8px_40px_rgba(0,0,0,0.6)] md:shadow-2xl mx-auto md:mx-0">
           <img
-            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=500" 
+            src="/fatiya-photo.png" 
             alt="Profile Cover"
             className="w-[200px] h-[200px] md:w-60 md:h-60 object-cover shadow-2xl rounded-md md:rounded-none"
           />
