@@ -174,4 +174,4 @@ Developed by **Fatiya Labibah**.
 ⭐ **Don't forget to star this repo if you find it useful!**
 ---
 
-*© 2025 WonderAI Project. All Rights Reserved.*
+*© 2026 Portfolio Project. All Rights Reserved.*
