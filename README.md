@@ -2,18 +2,18 @@
 
 > A dynamic personal portfolio website inspired by Spotify's UI/UX. Built with the MERN Stack, featuring a custom Admin Dashboard, Cloudinary image optimization, and fully responsive design.
 
-![Project Banner](https://via.placeholder.com/1200x600/121212/1ed760?text=Fatiya+Portfolio+Preview)
-*(Recommended: Replace the link above with a real screenshot of your website)*
+![Portfolio Preview](./public/preview.png)
+
+# <img src="./src/icon-spotify.png" alt="Spotify Logo" width="43" height="43" /> Potfolio Spotify
 
 ## 🚀 Live Demo
-- **Frontend:** [https://portfolio-frontend-yours.vercel.app](https://portfolio-frontend-yours.vercel.app)
+- **Frontend:** [https://fatiyalabibah.vercel.app](https://portfolio-frontend-yours.vercel.app)
 - **Backend API:** [https://portfolio-be-five-dun.vercel.app](https://portfolio-be-five-dun.vercel.app)
 
----
 
 ## ✨ Key Features
 
-### 🎨 User Interface (Frontend)
+### 🦊 User Interface (Frontend)
 - **Spotify-inspired Design:** Dark mode aesthetic, sidebar navigation, and familiar layout.
 - **Responsive:** Fully optimized for Desktop, Tablet, and Mobile devices.
 - **Dynamic Content:** Projects, Education, Experience, and Certificates are fetched directly from the database.
@@ -21,15 +21,13 @@
 - **Deep Linking:** Share specific projects via URL (e.g., `/?id=xyz`), which automatically opens the details sidebar.
 - **Smart Sidebar:** Remembers user preference (collapsed/expanded) using Local Storage.
 
-### 🛠️ Administrator (Backend & CMS)
+### 🦉 Administrator (Backend & CMS)
 - **Secure Admin Panel:** Login system to manage portfolio content.
 - **CRUD Operations:** Create, Read, Update, and Delete projects, certificates, etc.
 - **Image Optimization:** Integrated with **Cloudinary** for fast image loading and efficient storage.
 - **Database:** Hosted on **MongoDB Atlas** for real-time data access.
 
----
-
-## 💻 Tech Stack
+## ♟️ Tech Stack
 
 | Area | Technologies |
 | :--- | :--- |
@@ -38,8 +36,6 @@
 | **Database** | MongoDB Atlas (Mongoose ODM) |
 | **Storage** | Cloudinary (Image CDN) |
 | **Deployment** | Vercel (Frontend & Backend) |
-
----
 
 ## ⚙️ Installation & Setup (Local)
 
@@ -112,7 +108,7 @@ npm run dev
 
 ---
 
-## 📡 API Endpoints
+## 🔗 API Endpoints
 
 The backend provides a RESTful API for the frontend.
 
@@ -166,7 +162,7 @@ This project is configured for deployment on **Vercel**.
 
 ---
 
-## 🤝 Credits
+## 🪶 Credits
 
 Developed by **Fatiya Labibah**.
 
