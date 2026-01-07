@@ -1,4 +1,3 @@
-```markdown
 # 🎵 Fatiya Labibah - Portfolio (Spotify Style)
 
 > A dynamic personal portfolio website inspired by Spotify's UI/UX. Built with the MERN Stack, featuring a custom Admin Dashboard, Cloudinary image optimization, and fully responsive design.
