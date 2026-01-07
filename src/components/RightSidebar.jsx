@@ -254,7 +254,7 @@ const RightSidebar = ({ project, onClose, isMobileFull, isExpanded, onToggleExpa
                               <h4 className="font-bold text-sm">Fatiya Labibah</h4>
                               <p className="text-xs text-gray-400">Creator</p>
                           </div>
-                          <button className="border border-gray-600 px-3 py-1 rounded-full text-xs font-bold hover:border-white transition">Follow</button>
+                          <a href="https://github.com/fatiya17" target="_blank" rel="noopener noreferrer" className="border border-gray-600 px-3 py-1 rounded-full text-xs font-bold hover:border-white transition inline-block text-center">Follow</a>
                       </div>
                   </div>
               )}
