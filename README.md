@@ -1,13 +1,11 @@
-# 🎵 Fatiya Labibah - Portfolio (Spotify Style)
+# <img src="./public/icon-spotify.png" alt="Spotify Logo" width="40" height="40" /> Fatiya Labibah - Portfolio (Spotify Style)
 
 > A dynamic personal portfolio website inspired by Spotify's UI/UX. Built with the MERN Stack, featuring a custom Admin Dashboard, Cloudinary image optimization, and fully responsive design.
 
 
 ![Portfolio Preview](./public/preview.png)
 
-# <img src="./public/icon-spotify.png" alt="Spotify Logo" width="38" height="38" /> Potfolio Spotify
-
-## 🚀 Live Demo
+## 🎵 Live Demo
 - **Frontend:** [https://fatiyalabibah.vercel.app](https://portfolio-frontend-yours.vercel.app)
 - **Backend API:** [https://portfolio-be-five-dun.vercel.app](https://portfolio-be-five-dun.vercel.app)
 
