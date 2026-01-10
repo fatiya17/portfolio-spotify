@@ -7,7 +7,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 
 const PlayerBar = ({ project, onOpenMobilePlayer }) => {
-  const [isPlaying, setIsPlaying] = useState(true); 
+  const [isPlaying, setIsPlaying] = useState(false); // default to false
   const [showShareModal, setShowShareModal] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   
@@ -16,38 +16,44 @@ const PlayerBar = ({ project, onOpenMobilePlayer }) => {
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
 
+  // audio source from project (removed fallback string)
+  const audioSource = project?.audioUrl;
+
   if (!project) return null;
 
   // --- audio logic start ---
 
   // handle play/pause when isPlaying changes
   useEffect(() => {
-    if (audioRef.current) {
+    if (audioRef.current && audioSource) {
         if (isPlaying) {
             audioRef.current.play().catch(err => console.log("playback error:", err));
         } else {
             audioRef.current.pause();
         }
     }
-  }, [isPlaying]);
+  }, [isPlaying, audioSource]);
 
-  // reset and FORCE PLAY when project changes
+  // reset and force play ONLY IF audioSource exists
   useEffect(() => {
-    if(audioRef.current) {
+    if(audioRef.current && audioSource) {
         audioRef.current.load(); 
         
         // force play immediately
         const playPromise = audioRef.current.play();
         if (playPromise !== undefined) {
             playPromise.catch(error => {
-                console.log("Auto-play prevented:", error);
+                console.log("auto-play prevented:", error);
                 setIsPlaying(false); // revert to pause if blocked
             });
         }
         
-        setIsPlaying(true); // update UI state
+        setIsPlaying(true); // update ui state to playing
+    } else {
+        // if no audio, ensure ui is paused
+        setIsPlaying(false);
     }
-  }, [project]);
+  }, [project, audioSource]);
 
   const handleTimeUpdate = () => {
     if (audioRef.current) {
@@ -87,14 +93,14 @@ const PlayerBar = ({ project, onOpenMobilePlayer }) => {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
-  // fallback audio url to local file
-  const audioSource = project.audioUrl || "/Westlife - If I Let You Go.mp3";
-
   // --- audio logic end ---
 
   const togglePlay = (e) => {
     e.stopPropagation();
-    setIsPlaying(!isPlaying);
+    // only toggle if there is audio
+    if (audioSource) {
+        setIsPlaying(!isPlaying);
+    }
   };
 
   const openLink = (url) => {
@@ -114,7 +120,7 @@ const PlayerBar = ({ project, onOpenMobilePlayer }) => {
       setShowSuccessPopup(true);
       setTimeout(() => setShowSuccessPopup(false), 3000);
     } catch (error) {
-      alert('Failed to copy link');
+      alert('failed to copy link');
     }
   };
 
@@ -154,24 +160,27 @@ const PlayerBar = ({ project, onOpenMobilePlayer }) => {
             });
             setShowShareModal(false);
         } catch (error) {
-            console.log('Error sharing:', error);
+            console.log('error sharing:', error);
         }
     } else {
-        alert("Web Share API not supported in this browser");
+        alert("web share api not supported in this browser");
     }
   };
 
   return (
     <>
       {/* hidden audio element with autoPlay attribute */}
-      <audio 
-        ref={audioRef}
-        src={audioSource}
-        autoPlay={true} 
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleLoadedMetadata}
-        onEnded={handleEnded}
-      />
+      {/* conditionally render audio tag only if source exists */}
+      {audioSource && (
+        <audio 
+            ref={audioRef}
+            src={audioSource}
+            autoPlay={true} 
+            onTimeUpdate={handleTimeUpdate}
+            onLoadedMetadata={handleLoadedMetadata}
+            onEnded={handleEnded}
+        />
+      )}
 
       <div className="hidden md:flex w-full h-[90px] bg-black border-t border-[#282828] px-4 z-50 items-center justify-between shrink-0">
           
@@ -205,7 +214,8 @@ const PlayerBar = ({ project, onOpenMobilePlayer }) => {
                 
                 <button 
                     onClick={togglePlay} 
-                    className="bg-white rounded-full p-2 hover:scale-105 active:scale-95 transition shadow-lg flex items-center justify-center"
+                    className={`rounded-full p-2 transition shadow-lg flex items-center justify-center ${audioSource ? 'bg-white hover:scale-105 active:scale-95 cursor-pointer' : 'bg-gray-500 cursor-not-allowed opacity-50'}`}
+                    disabled={!audioSource}
                 >
                     {isPlaying ? <Pause fill="black" size={20} /> : <Play fill="black" size={20} className="ml-0.5" />}
                 </button>
@@ -221,18 +231,20 @@ const PlayerBar = ({ project, onOpenMobilePlayer }) => {
                 
                 {/* progress bar */}
                 <div 
-                    className="h-1 bg-[#4d4d4d] rounded-full w-full relative group cursor-pointer"
-                    onClick={handleSeek}
+                    className={`h-1 bg-[#4d4d4d] rounded-full w-full relative group ${audioSource ? 'cursor-pointer' : 'cursor-default'}`}
+                    onClick={audioSource ? handleSeek : undefined}
                 >
                     <div 
                         className="absolute top-0 left-0 h-full bg-white rounded-full group-hover:bg-spotify-green transition-colors"
-                        style={{ width: `${(currentTime / duration) * 100}%` }}
+                        style={{ width: `${(currentTime / (duration || 1)) * 100}%` }}
                     ></div>
                     {/* draggable thumb effect */}
-                    <div 
-                        className="hidden group-hover:block absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow"
-                        style={{ left: `${(currentTime / duration) * 100}%` }}
-                    ></div>
+                    {audioSource && (
+                        <div 
+                            className="hidden group-hover:block absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow"
+                            style={{ left: `${(currentTime / (duration || 1)) * 100}%` }}
+                        ></div>
+                    )}
                 </div>
                 
                 {/* duration */}
@@ -278,7 +290,7 @@ const PlayerBar = ({ project, onOpenMobilePlayer }) => {
                   <Share2 size={20} />
               </button>
               
-              <button onClick={togglePlay} className="text-white">
+              <button onClick={togglePlay} className={`text-white ${!audioSource && 'opacity-50 cursor-not-allowed'}`} disabled={!audioSource}>
                  {isPlaying ? <Pause fill="white" size={24} /> : <Play fill="white" size={24} />}
               </button>
           </div>
@@ -286,7 +298,7 @@ const PlayerBar = ({ project, onOpenMobilePlayer }) => {
           <div className="absolute bottom-0 left-2 right-2 h-[2px] bg-white/20 rounded-b-md overflow-hidden">
              <div 
                 className="h-full bg-white rounded-full transition-all duration-300"
-                style={{ width: `${(currentTime / duration) * 100}%` }}
+                style={{ width: `${(currentTime / (duration || 1)) * 100}%` }}
              ></div>
           </div>
       </div>
