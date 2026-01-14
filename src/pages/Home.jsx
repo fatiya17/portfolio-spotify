@@ -100,7 +100,7 @@ const Home = () => {
           </h1>
 
           <p className="text-gray-300/90 text-xs md:text-sm font-medium max-w-xl line-clamp-2 md:line-clamp-none">
-            Informatics Engineering Student. Frontend & Mobile Developer.
+            Informatics Engineering Student. Web & Mobile Developer.
             Building scalable apps with React & Flutter.
           </p>
 
