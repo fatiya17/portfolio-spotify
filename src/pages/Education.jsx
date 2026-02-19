@@ -86,8 +86,12 @@ const Education = () => {
                   {/* left */}
                   <div className="flex-1">
                     <div className="flex items-start sm:items-center gap-3 sm:gap-4 mb-3">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#2a2a2a] flex items-center justify-center group-hover:bg-blue-400/20 transition shrink-0">
-                        <GraduationCap size={20} className="text-blue-400" />
+                      <div className={`w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center transition shrink-0 ${edu.imageUrl ? 'bg-transparent' : 'rounded-full bg-[#2a2a2a] group-hover:bg-blue-400/20'}`}>
+                        {edu.imageUrl ? (
+                            <img src={edu.imageUrl} alt={edu.school} className="w-full h-full object-contain" />
+                        ) : (
+                            <GraduationCap size={20} className="text-blue-400" />
+                        )}
                       </div>
                       <div>
                         <h3 className="text-white text-base sm:text-lg font-bold leading-snug group-hover:text-blue-400 transition">
