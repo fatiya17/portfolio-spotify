@@ -307,8 +307,12 @@ const Home = () => {
                 <ul className="space-y-4">
                     {educationData.slice(0, 2).map((edu, idx) => (
                         <li key={edu._id || idx} className="flex items-center gap-4">
-                            <div className="bg-[#333] p-3 rounded-full text-white shrink-0">
-                                <BadgeCheck size={20} />
+                            <div className={`w-12 h-12 shrink-0 flex items-center justify-center ${edu.imageUrl ? 'bg-transparent' : 'rounded-full bg-[#333] border border-[#444]'}`}>
+                                {edu.imageUrl ? (
+                                    <img src={edu.imageUrl} alt={edu.school} className="w-full h-full object-contain" />
+                                ) : (
+                                    <BadgeCheck size={20} className="text-white" />
+                                )}
                             </div>
                             <div>
                                 <h4 className="font-bold text-white text-sm md:text-base">{edu.degree}</h4>
