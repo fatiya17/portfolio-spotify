@@ -22,6 +22,7 @@ const ManageEducation = () => {
   // config form fields
   const formFields = [
     { name: 'school', label: 'School / University', type: 'text', placeholder: 'e.g. Harvard University' },
+    { name: 'imageUrl', label: 'Institution Logo', type: 'image' },
     { name: 'degree', label: 'Degree / Major', type: 'text', placeholder: 'e.g. Computer Science' },
     { name: 'year', label: 'Year', type: 'text', placeholder: 'e.g. 2020 - 2024' },
     { name: 'grade', label: 'Grade / GPA', type: 'text', placeholder: 'e.g. 3.8/4.0' },
