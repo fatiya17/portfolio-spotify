@@ -26,6 +26,7 @@ const ManageExperience = () => {
     { name: 'location', label: 'Location', type: 'text', placeholder: 'e.g. Jakarta, Indonesia' },
     { name: 'period', label: 'Period', type: 'text', placeholder: 'e.g. Jan 2024 - Present' },
     { name: 'type', label: 'Job Type', type: 'text', placeholder: 'e.g. Full-time / Internship' },
+    { name: 'link', label: 'Website Link', type: 'text', placeholder: 'e.g. https://company.com' },
     { name: 'description', label: 'Description', type: 'textarea', placeholder: 'Describe your responsibilities...' },
     { name: 'skills', label: 'Skills Used', type: 'array', placeholder: 'React, Figma, Git' },
   ];
