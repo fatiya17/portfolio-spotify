@@ -26,6 +26,7 @@ const ManageEducation = () => {
     { name: 'degree', label: 'Degree / Major', type: 'text', placeholder: 'e.g. Computer Science' },
     { name: 'year', label: 'Year', type: 'text', placeholder: 'e.g. 2020 - 2024' },
     { name: 'grade', label: 'Grade / GPA', type: 'text', placeholder: 'e.g. 3.8/4.0' },
+    { name: 'link', label: 'Website Link', type: 'text', placeholder: 'e.g. https://harvard.edu' },
     { name: 'desc', label: 'Description', type: 'textarea', placeholder: 'Additional info, activities...' },
   ];
 
