@@ -81,7 +81,18 @@ const Experience = () => {
                       </div>
                       <div className="flex-1">
                          <h3 className="text-xl font-bold text-white group-hover:text-green-400 transition">{item.role}</h3>
-                         <p className="text-spotify-green text-sm font-bold mb-2">{item.company}</p>
+                         {item.link ? (
+                            <a 
+                               href={item.link} 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               className="text-spotify-green text-sm font-bold mb-2 inline-block hover:text-white hover:underline transition-all"
+                            >
+                               {item.company}
+                            </a>
+                         ) : (
+                            <p className="text-spotify-green text-sm font-bold mb-2">{item.company}</p>
+                         )}
                          <p className="text-gray-400 text-sm leading-relaxed mb-3">{item.description}</p>
                          <div className="flex flex-wrap gap-2">
                             {item.skills.map(skill => (
