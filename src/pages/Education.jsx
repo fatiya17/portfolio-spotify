@@ -94,9 +94,20 @@ const Education = () => {
                         )}
                       </div>
                       <div>
-                        <h3 className="text-white text-base sm:text-lg font-bold leading-snug group-hover:text-blue-400 transition">
-                          {edu.school}
-                        </h3>
+                        {edu.link ? (
+                           <a 
+                              href={edu.link} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-white text-base sm:text-lg font-bold leading-snug hover:text-blue-400 hover:underline transition-all"
+                           >
+                              {edu.school}
+                           </a>
+                        ) : (
+                           <h3 className="text-white text-base sm:text-lg font-bold leading-snug group-hover:text-blue-400 transition">
+                              {edu.school}
+                           </h3>
+                        )}
                         <p className="text-gray-400 text-sm font-medium">
                           {edu.degree}
                         </p>
