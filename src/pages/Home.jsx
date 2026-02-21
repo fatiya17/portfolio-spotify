@@ -316,7 +316,19 @@ const Home = () => {
                             </div>
                             <div>
                                 <h4 className="font-bold text-white text-sm md:text-base">{edu.degree}</h4>
-                                <p className="text-xs text-gray-400">{edu.school} • {edu.year}</p>
+                                {edu.link ? (
+                                    <a 
+                                        href={edu.link} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="text-xs text-gray-400 hover:text-white hover:underline transition-all"
+                                    >
+                                        {edu.school}
+                                    </a>
+                                ) : (
+                                    <span className="text-xs text-gray-400">{edu.school}</span>
+                                )}
+                                <span className="text-xs text-gray-400"> • {edu.year}</span>
                             </div>
                         </li>
                     ))}
