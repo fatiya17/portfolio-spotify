@@ -94,19 +94,19 @@ const Projects = () => {
         </div>
 
         {/* filter */}
-        <div className="px-4 md:px-8 mt-6 flex gap-2 mb-6 overflow-x-auto no-scrollbar">
+        <div className="px-4 md:px-8 mt-6 flex flex-wrap items-center justify-center md:justify-start gap-2 mb-6">
           {FILTERS.map((cat) => (
             <button
               key={cat}
               onClick={() => setFilter(cat)}
               className={`
-                px-3 py-1.5 md:px-4 md:py-1.5 
+                px-4 py-2 md:px-4 md:py-1.5 
                 rounded-full 
                 text-xs md:text-sm 
                 font-bold transition border border-transparent whitespace-nowrap
                 ${
                   filter === cat
-                    ? "bg-white text-black"
+                    ? "bg-[#61368a] text-white border-transparent shadow-[0_0_15px_rgba(97,54,138,0.3)]"
                     : "bg-[#2a2a2a] text-white hover:bg-[#3E3E3E]"
                 }`}
             >
