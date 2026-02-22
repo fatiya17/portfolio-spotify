@@ -12,6 +12,19 @@ const ManageCertificates = () => {
   const [editItem, setEditItem] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const location = useLocation();
+  
+  const getCategoryColor = (category) => {
+    const colors = {
+      "Course Certificate": "bg-blue-900/30 text-blue-400 border-blue-800/50",
+      "Award": "bg-yellow-900/30 text-yellow-500 border-yellow-700/50",
+      "Badge": "bg-purple-900/30 text-purple-400 border-purple-800/50",
+      "Competition": "bg-red-900/30 text-red-400 border-red-800/50",
+      "Competency": "bg-orange-900/30 text-orange-400 border-orange-800/50",
+      "Organization": "bg-green-900/30 text-green-400 border-green-800/50",
+      "Others": "bg-gray-800/30 text-gray-400 border-gray-700/50",
+    };
+    return colors[category] || "bg-yellow-900/30 text-yellow-500 border-yellow-700/50";
+  };
 
   // config columns
   const columns = [
@@ -29,6 +42,15 @@ const ManageCertificates = () => {
     { header: "Title", accessor: "title" },
     { header: "Issuer", accessor: "issuer" },
     { header: "Date", accessor: "date" },
+    { 
+      header: "Category", 
+      accessor: "category",
+      render: (item) => (
+        <span className={`text-[10px] font-bold px-3 py-1 rounded-full border uppercase tracking-tighter ${getCategoryColor(item.category)}`}>
+          {item.category || "Others"}
+        </span>
+      )
+    },
   ];
 
   // config form fields
@@ -57,6 +79,21 @@ const ManageCertificates = () => {
       label: "Verify Link",
       type: "text",
       placeholder: "https://...",
+    },
+    {
+      name: "category",
+      label: "Category",
+      type: "select",
+      defaultValue: "Others",
+      options: [
+        { label: "Course Certificate", value: "Course Certificate" },
+        { label: "Award", value: "Award" },
+        { label: "Badge", value: "Badge" },
+        { label: "Competition", value: "Competition" },
+        { label: "Competency", value: "Competency" },
+        { label: "Organization", value: "Organization" },
+        { label: "Others", value: "Others" },
+      ]
     },
     {
       name: "imageUrl",
