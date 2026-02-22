@@ -8,6 +8,22 @@ const Certificates = () => {
   const [certificates, setCertificates] = useState([]);
   const [selectedCert, setSelectedCert] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [activeFilter, setActiveFilter] = useState("All");
+
+  const categories = ["All", "Course Certificate", "Award", "Badge", "Competition", "Competency", "Organization", "Others"];
+
+  const getCategoryColor = (category) => {
+    const colors = {
+      "Course Certificate": "bg-blue-900/30 text-blue-400 border-blue-800/50",
+      "Award": "bg-yellow-900/30 text-yellow-500 border-yellow-700/50",
+      "Badge": "bg-purple-900/30 text-purple-400 border-purple-800/50",
+      "Competition": "bg-red-900/30 text-red-400 border-red-800/50",
+      "Competency": "bg-orange-900/30 text-orange-400 border-orange-800/50",
+      "Organization": "bg-green-900/30 text-green-400 border-green-800/50",
+      "Others": "bg-gray-800/30 text-gray-400 border-gray-700/50",
+    };
+    return colors[category] || "bg-yellow-900/30 text-yellow-500 border-yellow-700/50";
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +70,25 @@ const Certificates = () => {
           </div>
         </div>
 
+        {/* filter tabs */}
+        <div className="px-4 md:px-8 mt-8 mb-4">
+           <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 pb-4">
+              {categories.map((cat) => (
+                 <button
+                    key={cat}
+                    onClick={() => setActiveFilter(cat)}
+                    className={`whitespace-nowrap px-4 py-2 rounded-full text-xs font-bold transition-all border ${
+                       activeFilter === cat 
+                       ? "bg-[#d7a332] text-black border-transparent shadow-[0_0_15px_rgba(215,163,50,0.3)]" 
+                       : "bg-[#282828] text-gray-400 border-[#333] hover:border-gray-500 hover:text-white"
+                    }`}
+                 >
+                    {cat}
+                 </button>
+              ))}
+           </div>
+        </div>
+
          {/* grid certificates */}
          <div className="px-4 md:px-8 pb-24 mt-4">
             {loading ? (
@@ -62,7 +97,9 @@ const Certificates = () => {
                </div>
             ) : (
                <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
-                  {certificates.map((cert, idx) => (
+                  {certificates
+                    .filter(cert => activeFilter === "All" || cert.category === activeFilter)
+                    .map((cert, idx) => (
                      <motion.div 
                        key={cert._id || cert.id} 
                        initial={{ opacity: 0, scale: 0.9 }}
@@ -91,6 +128,11 @@ const Certificates = () => {
                                 {cert.title}
                             </h3>
                             
+                            <div className="flex items-center gap-2 mb-2">
+                               <span className={`text-[10px] font-bold px-3 py-1 rounded-full border uppercase tracking-tighter ${getCategoryColor(cert.category)}`}>
+                                  {cert.category || 'Others'}
+                               </span>
+                            </div>
                             <div className="flex items-center gap-2 mb-3 mt-1">
                                <BadgeCheck size={14} className="text-blue-400 shrink-0"/>
                                <p className="text-xs text-gray-400 font-medium truncate">{cert.issuer}</p>
@@ -146,8 +188,8 @@ const Certificates = () => {
                         <div className="flex-1 overflow-y-auto custom-scrollbar p-4 md:p-6">
                            <div className="mb-4">
                               <div className="flex items-center gap-2 mb-2">
-                                 <span className="bg-yellow-900/30 text-yellow-500 text-[10px] font-bold px-2 py-0.5 rounded border border-yellow-700/50 uppercase">
-                                    Cert
+                                 <span className={`text-[10px] font-bold px-3 py-1 rounded-full border uppercase ${getCategoryColor(selectedCert.category)}`}>
+                                    {selectedCert.category || 'Others'}
                                  </span>
                                  <span className="text-gray-500 text-xs font-mono">{selectedCert.date}</span>
                               </div>
