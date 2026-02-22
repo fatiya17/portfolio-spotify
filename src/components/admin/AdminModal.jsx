@@ -188,6 +188,18 @@ const AdminModal = ({ isOpen, onClose, title, fields, initialData, onSubmit, isS
                             <Plus size={16} /> Add Gallery Image
                         </button>
                     </div>
+                ) : field.type === 'select' ? (
+                  <select
+                    name={field.name}
+                    value={formData[field.name] || field.defaultValue || ''}
+                    onChange={handleChange}
+                    className="bg-[#2a2a2a] border border-transparent focus:border-green-500 rounded p-3 text-white outline-none transition"
+                  >
+                    <option value="" disabled>{field.placeholder || "Select Category"}</option>
+                    {field.options && field.options.map(opt => (
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    ))}
+                  </select>
                 ) : (
                   <input
                     type={field.type === 'number' ? 'number' : 'text'}
