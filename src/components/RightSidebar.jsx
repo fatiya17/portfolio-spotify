@@ -205,7 +205,7 @@ const RightSidebar = ({ project, onClose, isMobileFull, isExpanded, onToggleExpa
               <div className="mb-8 space-y-6">
                   <div>
                       <h3 className="text-sm font-bold text-gray-300 uppercase tracking-wider mb-2">Description</h3>
-                      <p className="text-gray-400 text-sm md:text-base leading-relaxed whitespace-pre-line">
+                      <p className="text-white font-light text-sm md:text-base leading-relaxed whitespace-pre-line">
                           {project.description || "No description provided."}
                       </p>
                   </div>
@@ -213,7 +213,7 @@ const RightSidebar = ({ project, onClose, isMobileFull, isExpanded, onToggleExpa
                   {project.problemSolved && (
                       <div>
                           <h3 className="text-sm font-bold text-gray-300 uppercase tracking-wider mb-2">Problem Solved</h3>
-                          <p className="text-gray-400 text-sm md:text-base leading-relaxed italic border-l-2 border-green-500 pl-3">
+                          <p className="text-white font-light text-sm md:text-base leading-relaxed italic border-l-2 border-green-500 pl-3">
                               "{project.problemSolved}"
                           </p>
                       </div>
