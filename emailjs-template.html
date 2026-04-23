@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>New Message</title>
+
+  <!-- Poppins (supported in Gmail, Apple Mail, iOS, Android) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    table {
+      border-spacing: 0;
+    }
+
+    /* Responsive */
+    @media only screen and (max-width: 600px) {
+      .container {
+        width: 100% !important;
+      }
+      .content {
+        padding: 24px !important;
+      }
+      .title {
+        font-size: 22px !important;
+      }
+      .button {
+        width: 100% !important;
+        text-align: center !important;
+        box-sizing: border-box;
+      }
+      .mobile-center {
+        text-align: center !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
+    <tr>
+      <td align="center">
+
+        <!-- CONTAINER -->
+        <table width="600" cellpadding="0" cellspacing="0" border="0"
+          class="container"
+          style="width:600px; max-width:600px;">
+
+          <!-- HEADER -->
+          <tr>
+            <td align="center" style="padding:32px 40px 10px 40px;">
+              <div style="
+                font-family:'Poppins', Helvetica, Arial, sans-serif;
+                font-size:13px;
+                color:#1DB954;
+                font-weight:600;
+                letter-spacing:1px;">
+                PORTFOLIO MESSAGE
+              </div>
+            </td>
+          </tr>
+
+          <!-- TITLE -->
+          <tr>
+            <td align="center" class="content" style="padding:10px 40px 30px 40px;">
+              <h1 class="title" style="
+                margin:0;
+                font-family:'Poppins', Helvetica, Arial, sans-serif;
+                font-size:26px;
+                font-weight:700;
+                color:#000000;
+                line-height:1.3;">
+                New message received
+              </h1>
+              <p style="
+                margin:12px 0 0 0;
+                font-family:'Poppins', Helvetica, Arial, sans-serif;
+                font-size:15px;
+                color:#444444;">
+                Someone contacted you via your portfolio
+              </p>
+            </td>
+          </tr>
+
+          <!-- SENDER -->
+          <tr>
+            <td style="padding:0 40px 20px 40px;">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="52" valign="middle">
+                    <div style="
+                      width:44px;
+                      height:44px;
+                      border-radius:50%;
+                      background:#000000;
+                      color:#ffffff;
+                      text-align:center;
+                      line-height:44px;
+                      font-size:18px;
+                      font-family:'Poppins', Helvetica, Arial, sans-serif;">
+                      👤
+                    </div>
+                  </td>
+                  <td valign="middle" style="padding-left:12px;">
+                    <div style="
+                      font-family:'Poppins', Helvetica, Arial, sans-serif;
+                      font-size:16px;
+                      font-weight:600;
+                      color:#000000;">
+                      {{name}}
+                    </div>
+                    <div style="
+                      font-family:'Poppins', Helvetica, Arial, sans-serif;
+                      font-size:14px;
+                      color:#555555;">
+                      <a href="mailto:{{email}}" style="color:#555555; text-decoration:none;">
+                        {{email}}
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- SUBJECT -->
+          <tr>
+            <td style="padding:0 40px 6px 40px;">
+              <div style="
+                font-family:'Poppins', Helvetica, Arial, sans-serif;
+                font-size:11px;
+                letter-spacing:1px;
+                color:#999999;
+                font-weight:600;">
+                SUBJECT
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 40px 20px 40px;">
+              <div style="
+                font-family:'Poppins', Helvetica, Arial, sans-serif;
+                font-size:16px;
+                font-weight:600;
+                color:#000000;">
+                {{subject}}
+              </div>
+            </td>
+          </tr>
+
+          <!-- MESSAGE -->
+          <tr>
+            <td style="padding:0 40px 6px 40px;">
+              <div style="
+                font-family:'Poppins', Helvetica, Arial, sans-serif;
+                font-size:11px;
+                letter-spacing:1px;
+                color:#999999;
+                font-weight:600;">
+                MESSAGE
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 40px 30px 40px;">
+              <div style="
+                background:#f5f5f5;
+                padding:20px;
+                border-radius:8px;
+                font-family:'Poppins', Helvetica, Arial, sans-serif;
+                font-size:15px;
+                color:#333333;
+                line-height:1.6;">
+                {{message}}
+              </div>
+            </td>
+          </tr>
+
+          <!-- CTA -->
+          <tr>
+            <td align="center" style="padding:0 40px 40px 40px;">
+              <a
+                href="mailto:{{email}}"
+                class="button"
+                style="
+                  display:inline-block;
+                  background-color:#000000;
+                  color:#ffffff;
+                  text-decoration:none;
+                  padding:14px 32px;
+                  border-radius:30px;
+                  font-family:'Poppins', Helvetica, Arial, sans-serif;
+                  font-size:14px;
+                  font-weight:600;
+                  text-transform:uppercase;">
+                REPLY TO {{name}}
+              </a>
+            </td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td align="center" style="padding:28px 40px; border-top:1px solid #eeeeee;">
+              <p style="
+                margin:0;
+                font-family:'Poppins', Helvetica, Arial, sans-serif;
+                font-size:11px;
+                color:#999999;">
+                Portfolio Notification • Secure Message
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- END CONTAINER -->
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
