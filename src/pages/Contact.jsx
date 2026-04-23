@@ -89,10 +89,10 @@ const Contact = () => {
     setIsSending(true);
 
     emailjs.sendForm(
-        'service_sendmessage', 
-        'template_sendmessage', 
+        import.meta.env.VITE_EMAILJS_SERVICE_ID, 
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID, 
         form.current, 
-        'UqwnmlVw39j50jK_K'
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
     )
     .then((result) => {
         // success
