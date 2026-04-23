@@ -97,6 +97,20 @@ npm install
 
 Ensure your API configuration in `src/api/axiosConfig.js` (or wherever you define Axios) points to localhost during development, or configure it via `.env`.
 
+Create a `.env` file inside the `client/` (or root frontend) directory for EmailJS configuration:
+
+```env
+VITE_EMAILJS_SERVICE_ID=your_emailjs_service_id_here
+VITE_EMAILJS_TEMPLATE_ID=your_emailjs_template_id_here
+VITE_EMAILJS_PUBLIC_KEY=your_emailjs_public_key_here
+```
+
+**How to get EmailJS keys:**
+1. Create a free account at [EmailJS](https://www.emailjs.com/).
+2. Add an **Email Service** (e.g., Gmail) to get your `Service ID`.
+3. Create an **Email Template** to get your `Template ID`. Ensure your template payload (`{{name}}`, `{{email}}`, `{{subject}}`, `{{message}}`) matches the frontend form parameters. *(Note: You can use the provided [emailjs-template.html](./emailjs-template.html) file in this repository as a starting point for your email design!)*
+4. Go to **Account > API Keys** to find your `Public Key`.
+
 Start the frontend:
 
 ```bash
@@ -127,23 +141,6 @@ The backend provides a RESTful API for the frontend.
 
 This project is configured for deployment on **Vercel**.
 
-### Backend Deployment
-
-1. Push the `server` folder to GitHub.
-2. Ensure `vercel.json` exists in the backend root folder:
-```json
-{
-  "version": 2,
-  "builds": [{"src": "index.js", "use": "@vercel/node"}],
-  "routes": [{"src": "/(.*)", "dest": "index.js"}]
-}
-
-```
-
-
-3. Import the project into Vercel.
-4. Add all **Environment Variables** (`MONGO_URI`, `CLOUDINARY_...`, etc.) in the Vercel project settings.
-
 ### Frontend Deployment
 
 1. Push the frontend code to GitHub.
@@ -157,7 +154,8 @@ This project is configured for deployment on **Vercel**.
 
 
 3. Import the project into Vercel.
-4. Deploy!
+4. Add all frontend **Environment Variables** (`VITE_EMAILJS_SERVICE_ID`, etc.) in the Vercel project settings.
+5. Deploy!
 
 ---
 
